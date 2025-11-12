@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-primary: 'Encode Sans Semi Expanded', sans-serif;
+
+  --color-primary: #ea6f33;
+
+  --color-secondary-900: #29334a;
+  --color-secondary-500: #2474e1;
+
+  --color-gray-500: #e6e8ea;
+  --color-gray-600: #dcdfe3;
+
+  --color-error-500: #c40000;
+  --color-error-700: #9f0000;
+}
+
+body {
+  @apply min-w-screen min-h-screen font-primary;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+p,
+span {
+  font-size-adjust: 0.5;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
