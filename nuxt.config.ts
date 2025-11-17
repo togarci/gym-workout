@@ -4,10 +4,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', '@nuxt/image', '@pinia/nuxt', '@vite-pwa/nuxt', 'pinia-plugin-persistedstate/nuxt'],
-  vite: {
-    plugins: [tailwindcss()],
-  },
 
   components: [
     {
@@ -15,6 +11,13 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+
+  modules: ['@nuxt/eslint', '@nuxt/image', '@pinia/nuxt', '@vite-pwa/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  css: ['./app/assets/tailwind.config.css'],
 
   app: {
     head: {
@@ -41,7 +44,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
         },
       ],
     },

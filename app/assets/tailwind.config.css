@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-primary: 'Encode Sans Semi Expanded', sans-serif;
+  --font-primary: 'Roboto', sans-serif;
 
   --color-primary: #ea6f33;
 
@@ -10,13 +10,16 @@
 
   --color-gray-500: #e6e8ea;
   --color-gray-600: #dcdfe3;
+  --color-gray-700: #9d9d9e;
 
   --color-error-500: #c40000;
   --color-error-700: #9f0000;
+
+  --shadow-custom: 0 4px 4px 0 rgb(0 0 0 / 0.25);
 }
 
 body {
-  @apply min-w-screen min-h-screen font-primary;
+  @apply min-w-screen min-h-screen font-primary bg-gray-500;
 }
 
 * {

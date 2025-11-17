@@ -1,0 +1,143 @@
+[
+  {
+    "userName": "togarci",
+    "workouts": [
+      {
+        "id": 1,
+        "name": "Treino A - Membros Superiores",
+        "exercises": [
+          {
+            "name": "Supino Vertical",
+            "sets": 4,
+            "reps": 10,
+            "obs": "1 x 15 de aquecimento. Máquina ou articulado."
+          },
+          {
+            "name": "Fly",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Desenvolvimento",
+            "sets": 4,
+            "reps": 10,
+            "obs": "Máquina ou articulado."
+          },
+          {
+            "name": "Elevação Lateral",
+            "sets": 3,
+            "reps": 12,
+            "obs": "Iso de 10\": Realizar isometria de 10 segundos após a última repetição de cada série."
+          },
+          {
+            "name": "Rosca Martelo",
+            "sets": 3,
+            "reps": 12
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Treino B - Membros Inferiores",
+        "exercises": [
+          {
+            "name": "Cadeira Abdutora",
+            "sets": 4,
+            "reps": 10,
+            "obs": "1 x 15 de aquecimento."
+          },
+          {
+            "name": "Elevação Pélvica",
+            "sets": 3,
+            "reps": 12,
+            "obs": "Iso de 10\", com barra. Realizar com barra livre, não máquina. Isometria de 10 segundos ao final de cada série."
+          },
+          {
+            "name": "Cadeira Flexora",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Stiff com Halteres",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Prancha Frontal",
+            "sets": 5,
+            "reps": 40,
+            "obs": "Segundos. Mínimo de 40\"."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Treino C - Membros Superiores",
+        "exercises": [
+          {
+            "name": "Puxada Frontal Neutra",
+            "sets": 3,
+            "reps": 12,
+            "obs": "1 x 15 de aquecimento. Barra romana ou unilateral."
+          },
+          {
+            "name": "Puxada Triângulo",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Remada Aberta",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Serrote Unilateral",
+            "sets": 3,
+            "reps": 10,
+            "obs": "Em cada lado."
+          },
+          {
+            "name": "Triceps Francês na Polia",
+            "sets": 3,
+            "reps": 12,
+            "obs": "Polia na altura da cintura."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Treino D - Membros Inferiores",
+        "exercises": [
+          {
+            "name": "Cadeira Adutora",
+            "sets": 4,
+            "reps": 10,
+            "obs": "1 x 15 de aquecimento."
+          },
+          {
+            "name": "Agachamento com Halter",
+            "sets": 4,
+            "reps": 10,
+            "obs": "Fazer 10 reps, segurar 10\" de isometria e fazer mais 10 reps (totalizando 1 série)."
+          },
+          {
+            "name": "Cadeira Extensora",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Panturrilha Sentado",
+            "sets": 3,
+            "reps": 15
+          },
+          {
+            "name": "Prancha Lateral",
+            "sets": 5,
+            "reps": 30,
+            "obs": "Segundos. Em cada lado."
+          }
+        ]
+      }
+    ]
+  }
+]
