@@ -20,7 +20,7 @@ const setCheck = (event: MouseEvent) => {
 <template>
   <div @click="setCheck" class="flex flex-col px-5 py-4 bg-white rounded-2xl gap-2 shadow-custom">
     <div class="flex items-center justify-between w-full">
-      <span class="line-clamp-1 font-semibold text-lg text-secondary-900"> {{ exercise.name }}</span>
+      <span class="line-clamp-1 font-semibold text-lg text-secondary"> {{ exercise.name }}</span>
 
       <Checkbox v-model="isChecked" />
     </div>

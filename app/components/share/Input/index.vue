@@ -23,7 +23,7 @@ const model = defineModel<any>();
         v-model="model"
         data-testId="custom-text-input"
         :placeholder="placeholder"
-        class="size-full text-secondary-900 placeholder:text-600 font-medium text-sm"
+        class="size-full text-secondary placeholder:text-600 font-medium text-sm"
       />
     </div>
 

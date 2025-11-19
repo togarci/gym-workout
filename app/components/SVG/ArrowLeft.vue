@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { className = 'size-6 fill-secondary-900' } = defineProps<{
+const { className = 'size-6 fill-secondary' } = defineProps<{
   className?: string;
 }>();
 </script>

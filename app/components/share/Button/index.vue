@@ -14,7 +14,7 @@ const { type = 'button' } = defineProps<{
     :type="type"
     :disabled="disabled"
     class="bg-primary text-white font-bold px-5 py-4 rounded-2xl shadow-custom"
-    :class="{ 'bg-primary': !disabled, 'bg-primary/80': disabled }"
+    :class="{ 'bg-primary': !disabled, 'bg-primary/60': disabled }"
   >
     <slot />
   </button>

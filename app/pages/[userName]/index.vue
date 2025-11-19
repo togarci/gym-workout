@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
   <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
-    <h1 class="text-secondary-900 font-semibold text-3xl text-wrap">Olá, {{ userName }}</h1>
+    <h1 class="text-secondary font-semibold text-3xl text-wrap">Olá, {{ userName }} 🏋️‍♂️</h1>
 
     <div class="flex-1 flex flex-col gap-5">
       <SelectWorkout

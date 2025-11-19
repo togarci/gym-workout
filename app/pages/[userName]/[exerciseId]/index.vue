@@ -53,9 +53,11 @@ onMounted(() => {
 
 <template>
   <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
-    <NuxtLink :href="`/${userName}`" class="flex gap-2 items-center">
-      <ArrowLeft />
-      <h1 class="text-secondary-900 font-semibold text-2xl text-wrap">{{ dataWorkout?.name }}</h1>
+    <NuxtLink :href="`/${userName}`" class="flex gap-2">
+      <div class="w-6 flex items-center h-8">
+        <ArrowLeft />
+      </div>
+      <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ dataWorkout?.name }}</h1>
     </NuxtLink>
 
     <div class="flex flex-1 flex-col gap-3">

@@ -18,6 +18,11 @@
             "reps": 12
           },
           {
+            "name": "Trapezio",
+            "sets": 3,
+            "reps": 15
+          },
+          {
             "name": "Desenvolvimento",
             "sets": 4,
             "reps": 10,
@@ -97,6 +102,11 @@
             "obs": "Em cada lado."
           },
           {
+            "name": "Trapezio",
+            "sets": 3,
+            "reps": 15
+          },
+          {
             "name": "Triceps Francês na Polia",
             "sets": 3,
             "reps": 12,
@@ -135,6 +145,134 @@
             "sets": 5,
             "reps": 30,
             "obs": "Segundos. Em cada lado."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "userName": "clarinha",
+    "workouts": [
+      {
+        "id": 1,
+        "name": "Treino A - Inferior (Glúteos e Posterior)",
+        "exercises": [
+          {
+            "name": "Cadeira flexora",
+            "sets": 4,
+            "reps": 12
+          },
+          {
+            "name": "Mesa flexora",
+            "sets": 3,
+            "reps": 10
+          },
+          {
+            "name": "Stiff com halteres",
+            "sets": 4,
+            "reps": "10-12"
+          },
+          {
+            "name": "Glúteo máquina/cabo",
+            "sets": 4,
+            "reps": 12
+          },
+          {
+            "name": "Cadeira abdutora",
+            "sets": 4,
+            "reps": 15
+          },
+          {
+            "name": "Elevação pélvica (hip thrust)",
+            "sets": 4,
+            "reps": 12
+          },
+          {
+            "name": "Abdômen prancha + crunch",
+            "sets": 3,
+            "reps": "30s + 15 reps"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Treino B - Superior (Peito, Ombro e Tríceps)",
+        "exercises": [
+          {
+            "name": "Supino reto",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Supino inclinado",
+            "sets": 3,
+            "reps": 10
+          },
+          {
+            "name": "Desenvolvimento com halteres",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Elevação lateral",
+            "sets": 4,
+            "reps": 12
+          },
+          {
+            "name": "Tríceps testa (ou corda)",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Tríceps banco",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Abdômen infra",
+            "sets": 3,
+            "reps": 15
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Treino C - Costas, Bíceps e Core",
+        "exercises": [
+          {
+            "name": "Puxada frente",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Remada baixa",
+            "sets": 4,
+            "reps": 10
+          },
+          {
+            "name": "Puxada neutra",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Rosca direta",
+            "sets": 3,
+            "reps": 12
+          },
+          {
+            "name": "Rosca alternada",
+            "sets": 3,
+            "reps": 10
+          },
+          {
+            "name": "Prancha lateral",
+            "sets": 3,
+            "reps": "30s"
+          },
+          {
+            "name": "Abdômen obliquo",
+            "sets": 3,
+            "reps": 15
           }
         ]
       }

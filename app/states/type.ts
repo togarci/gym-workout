@@ -7,7 +7,7 @@ export interface DatabaseTypes {
     exercises: {
       name: string;
       sets: number;
-      reps: number;
+      reps: number | string;
       obs?: string;
     }[];
   }[];
