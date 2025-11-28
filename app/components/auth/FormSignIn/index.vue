@@ -7,7 +7,7 @@ const userName = ref<string>('');
 const cookie = useCookie('userName');
 
 const submitSignIn = () => {
-  const findUserName = database.find((dt) => dt.userName === userName.value);
+  const findUserName = database.find((dt) => dt.userName === userName.value.toLowerCase());
   if (findUserName?.userName) {
     cookie.value = findUserName.userName;
     router.push(`/${findUserName.userName}`);
