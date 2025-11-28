@@ -25,6 +25,7 @@ const setCheck = (event: MouseEvent) => {
         {{ exercise.obs }}
       </span>
     </Modal>
+
     <div class="flex items-center justify-between w-full">
       <span class="line-clamp-1 font-semibold text-lg text-secondary"> {{ exercise.name }}</span>
 

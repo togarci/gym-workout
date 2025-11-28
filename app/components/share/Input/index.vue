@@ -24,7 +24,7 @@ const model = defineModel<any>();
         v-model="model"
         data-testId="custom-text-input"
         :placeholder="placeholder"
-        class="size-full placeholder:text-600 font-medium text-base"
+        class="size-full placeholder:text-600 lowercase font-medium text-base"
       />
     </div>
 
