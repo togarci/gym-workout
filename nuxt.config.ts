@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=yes' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {
           rel: 'preconnect',
