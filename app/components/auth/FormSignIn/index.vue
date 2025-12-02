@@ -10,7 +10,6 @@ const submitSignIn = () => {
   const findUserName = database.find((dt) => dt.userName === userName.value.toLowerCase());
   if (findUserName?.userName) {
     cookie.value = findUserName.userName;
-    localStorage.setItem('userName', findUserName.userName);
     router.push(`/${findUserName.userName}`);
   } else {
     userName.value = '';

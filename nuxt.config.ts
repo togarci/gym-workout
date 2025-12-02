@@ -49,4 +49,37 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      display: 'standalone',
+      orientation: 'portrait',
+      theme_color: '#ffffff',
+      background_color: '#ffffff',
+      start_url: '/',
+      scope: '/',
+      name: 'Gym App',
+      short_name: 'GYM',
+      description: 'Aplicativo para salvar treinos de academia',
+      icons: [
+        {
+          src: '/web-app-manifest-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'maskable',
+        },
+        {
+          src: '/web-app-manifest-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable',
+        },
+      ],
+    },
+
+    devOptions: {
+      enabled: true,
+    },
+  },
 });
