@@ -275,6 +275,54 @@
             "reps": 15
           }
         ]
+      },
+      {
+        "id": 4,
+        "name": "Treino D - Core e Inferior (Glúteos/Abdutor)",
+        "restBeforeSecondBlock": "45s",
+        "restAfterSecondBlock": "60s",
+        "exercises": [
+          {
+            "name": "Abdominal infra no banco",
+            "sets": 1,
+            "reps": 15
+          },
+          {
+            "name": "Abdominal bicicleta",
+            "sets": 1,
+            "reps": 20
+          },
+          {
+            "name": "Prancha frontal",
+            "sets": 1,
+            "reps": "40s"
+          },
+          {
+            "name": "Elevação pélvica com contração",
+            "sets": 1,
+            "reps": 15
+          },
+          {
+            "name": "Cadeira abdutora",
+            "sets": 4,
+            "reps": "15 (última com drop)"
+          },
+          {
+            "name": "Abdução de quadril no cabo",
+            "sets": 3,
+            "reps": "12 cada perna"
+          },
+          {
+            "name": "Elevação pélvica unilateral",
+            "sets": 3,
+            "reps": "12 cada lado"
+          },
+          {
+            "name": "Mini sumô com halter leve",
+            "sets": 3,
+            "reps": 15
+          }
+        ]
       }
     ]
   }
