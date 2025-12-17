@@ -9,11 +9,14 @@ const setUserNameOnCoockie = () => {
   const localUserName = localStorage.getItem('userName');
   const userNameExist = database.some((dt) => dt.userName === localUserName);
 
-  if (userNameExist && !currentPath.includes(String(localUserName))) userName.value = localUserName;
+  if (userNameExist && !currentPath.includes(String(localUserName))) {
+    userName.value = localUserName;
+    router.push(`/${localUserName}`);
+  }
 };
 
 onBeforeMount(() => {
-  setUserNameOnCoockie();
+  if (!userName.value) setUserNameOnCoockie();
 });
 </script>
 
