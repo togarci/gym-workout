@@ -6,6 +6,7 @@ import type { DatabaseTypes } from '~/states/type';
 const route = useRoute();
 const router = useRouter();
 const userName = route.params.userName;
+
 const dataWorkout = ref<DatabaseTypes>();
 const storageWorkout = ref<Array<number>>([]);
 const currentWorkout = ref<number>();
@@ -31,6 +32,13 @@ const setStorage = () => {
   }
 };
 
+const logout = () => {
+  localStorage.removeItem('userName');
+  const userNameCookie = useCookie('userName');
+  userNameCookie.value = '';
+  router.push('/');
+};
+
 onMounted(() => {
   if (!userName) router.push('/404');
 
@@ -44,7 +52,10 @@ onMounted(() => {
 
 <template>
   <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
-    <h1 class="text-secondary font-semibold text-3xl text-wrap">Olá, {{ userName }} 🏋️‍♂️</h1>
+    <div class="flex w-full justify-between items-center">
+      <h1 class="text-secondary font-semibold text-3xl text-wrap line-clamp-1">Olá, {{ userName }} 🏋️‍♂️</h1>
+      <Button @click="logout" variant="secondary" size="sm">Sair</Button>
+    </div>
 
     <div class="flex-1 flex flex-col gap-5">
       <SelectWorkout
