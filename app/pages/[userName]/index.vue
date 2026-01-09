@@ -7,28 +7,26 @@ const route = useRoute();
 const router = useRouter();
 const userName = route.params.userName;
 
-const dataWorkout = ref<DatabaseTypes>();
-const storageWorkout = ref<Array<number>>([]);
-const currentWorkout = ref<number>();
+const selectedDataUser = ref<DatabaseTypes>();
+const allWorkoutIdsDone = ref<Array<number>>([]);
+const nextWorkoutId = computed(
+  () => selectedDataUser.value?.workouts.find((workout) => !allWorkoutIdsDone.value.includes(workout.id))?.id
+);
 
-const setStorage = () => {
-  const localWorkout = localStorage.getItem('workoutData');
-  if (localWorkout) {
-    storageWorkout.value = JSON.parse(localWorkout);
-
-    if (dataWorkout.value?.workouts.every((item) => storageWorkout.value.includes(item.id))) {
-      storageWorkout.value = [];
-      localStorage.removeItem('workoutData');
-    }
-  } else {
-    storageWorkout.value = [];
+const resetWorkoutOnAllComplete = () => {
+  if (selectedDataUser.value?.workouts.every((item) => allWorkoutIdsDone.value.includes(item.id))) {
+    allWorkoutIdsDone.value = [];
+    localStorage.removeItem('workoutData');
   }
+};
 
-  if (storageWorkout.value.length === 0) {
-    currentWorkout.value = dataWorkout.value?.workouts[0]?.id;
+const getDataByLocalStorage = () => {
+  const localData = localStorage.getItem('workoutData');
+  if (localData) {
+    allWorkoutIdsDone.value = JSON.parse(localData);
+    resetWorkoutOnAllComplete();
   } else {
-    const nextNotDone = dataWorkout.value?.workouts.find((workout) => !storageWorkout.value.includes(workout.id));
-    currentWorkout.value = nextNotDone?.id;
+    allWorkoutIdsDone.value = [];
   }
 };
 
@@ -45,8 +43,8 @@ onMounted(() => {
   const findWorkout = database?.find((workT) => workT.userName === userName);
   if (!findWorkout) router.push('/404');
 
-  dataWorkout.value = findWorkout;
-  setStorage();
+  selectedDataUser.value = findWorkout;
+  getDataByLocalStorage();
 });
 </script>
 
@@ -59,15 +57,15 @@ onMounted(() => {
 
     <div class="flex-1 flex flex-col gap-5">
       <SelectWorkout
-        v-for="workout in dataWorkout?.workouts"
+        v-for="workout in selectedDataUser?.workouts"
         :key="workout.name"
         :workoutName="workout.name"
         :link="`/${userName}/${workout.id}`"
-        :isCurrent="workout.id === currentWorkout"
-        :isDone="storageWorkout.includes(workout.id)"
+        :isCurrent="workout.id === nextWorkoutId"
+        :isDone="allWorkoutIdsDone.includes(workout.id)"
       />
     </div>
 
-    <span class="text-gray-700 text-lg">Treinos: {{ dataWorkout?.workouts?.length }}</span>
+    <span class="text-gray-700 text-lg">Treinos: {{ selectedDataUser?.workouts?.length }}</span>
   </div>
 </template>
