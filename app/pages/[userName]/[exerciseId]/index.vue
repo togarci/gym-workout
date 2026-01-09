@@ -9,17 +9,17 @@ const router = useRouter();
 const userName = route.params.userName;
 const exerciseId = route.params.exerciseId;
 
-const dataWorkout = ref();
+const currentWorkout = ref();
 const formValues = ref<{ [key: string]: boolean }>({});
 
 const isDisabledButton = ref(true);
 
 const submitWorkout = () => {
-  const localWorkout = localStorage.getItem('workoutData');
-  if (localWorkout) {
-    const storageWorkout = JSON.parse(localWorkout);
-    storageWorkout.push(Number(exerciseId));
-    localStorage.setItem('workoutData', JSON.stringify(storageWorkout));
+  let localWorkoutIds = localStorage.getItem('workoutData');
+  if (localWorkoutIds) {
+    const workoutIds = JSON.parse(localWorkoutIds);
+    workoutIds.push(Number(exerciseId));
+    localStorage.setItem('workoutData', JSON.stringify(workoutIds));
   } else {
     localStorage.setItem('workoutData', JSON.stringify([Number(exerciseId)]));
   }
@@ -37,17 +37,17 @@ watch(
 onMounted(() => {
   if (!userName || !exerciseId) router.push('/404');
 
-  const findWorkout = database?.find((workT) => workT.userName === userName);
-  if (!findWorkout) router.push('/404');
+  const findUserData = database?.find((workT) => workT.userName === userName);
+  if (!findUserData) router.push('/404');
 
-  const exercise = findWorkout?.workouts.find((w) => w.id === Number(exerciseId));
-  if (!exercise) router.push('/404');
+  const workoutData = findUserData?.workouts.find((w) => w.id === Number(exerciseId));
+  if (!workoutData) router.push('/404');
 
-  exercise?.exercises.forEach((_, idx) => {
+  workoutData?.exercises.forEach((_, idx) => {
     formValues.value[`item${idx}`] = false;
   });
 
-  dataWorkout.value = exercise;
+  currentWorkout.value = workoutData;
 });
 </script>
 
@@ -57,12 +57,12 @@ onMounted(() => {
       <div class="w-6 flex items-center h-8">
         <ArrowLeft />
       </div>
-      <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ dataWorkout?.name }}</h1>
+      <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
     </NuxtLink>
 
     <div class="flex flex-1 flex-col gap-3">
       <ItemWorkout
-        v-for="(exercise, idx) in dataWorkout?.exercises"
+        v-for="(exercise, idx) in currentWorkout?.exercises"
         v-model="formValues[`item${idx}`]"
         :key="exercise.name"
         :exercise="exercise"
