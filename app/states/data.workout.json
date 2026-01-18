@@ -152,7 +152,7 @@
   },
   {
     "userName": "clarinha",
-    "workouts": [
+    "workoutsOld": [
       {
         "id": 1,
         "name": "Treino A - Inferior (Glúteos e Posterior)",
@@ -321,6 +321,169 @@
             "name": "Mini sumô com halter leve",
             "sets": 3,
             "reps": 15
+          }
+        ]
+      }
+    ],
+    "workouts": [
+      {
+        "id": 1,
+        "name": "Treino A - Glúteos + Posterior (Joelho Friendly)",
+        "duration": "~60 min",
+        "observations": "Zero flexão profunda de joelho | Foco total em glúteo e posterior",
+        "exercises": [
+          {
+            "name": "Hip Thrust com barra",
+            "sets": 5,
+            "reps": "6-8",
+            "notes": "Carga alta | 2s de contração no topo"
+          },
+          {
+            "name": "Stiff com barra ou halteres",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Mesa flexora deitada",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Cadeira flexora sentada",
+            "sets": 3,
+            "reps": "10-12"
+          },
+          {
+            "name": "Glúteo no cabo (coice)",
+            "sets": 3,
+            "reps": "10-12"
+          },
+          {
+            "name": "Cadeira abdutora",
+            "sets": 4,
+            "reps": "12-15",
+            "notes": "Drop na última série"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Treino B - Peito + Ombro + Tríceps",
+        "duration": "~60 min",
+        "observations": "Sem impacto no joelho | Volume alto para hipertrofia",
+        "exercises": [
+          {
+            "name": "Supino reto com barra ou máquina",
+            "sets": 5,
+            "reps": "6-8"
+          },
+          {
+            "name": "Supino inclinado com halteres",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Desenvolvimento com halteres (sentada)",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Elevação lateral",
+            "sets": 4,
+            "reps": "12",
+            "notes": "Drop na última série"
+          },
+          {
+            "name": "Tríceps corda no cross",
+            "sets": 4,
+            "reps": "10-12"
+          },
+          {
+            "name": "Tríceps francês sentado",
+            "sets": 3,
+            "reps": "10"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Treino C - Costas + Bíceps + Core",
+        "duration": "~60 min",
+        "observations": "Tudo sentado/deitado -> joelho protegido",
+        "exercises": [
+          {
+            "name": "Puxada frente (pegada neutra ou aberta)",
+            "sets": 5,
+            "reps": "6-8"
+          },
+          {
+            "name": "Remada baixa sentada",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Remada unilateral com halter (banco)",
+            "sets": 3,
+            "reps": "10 cada lado"
+          },
+          {
+            "name": "Pulldown neutro",
+            "sets": 3,
+            "reps": "10-12"
+          },
+          {
+            "name": "Rosca direta barra",
+            "sets": 4,
+            "reps": "8-10"
+          },
+          {
+            "name": "Rosca alternada",
+            "sets": 3,
+            "reps": "10"
+          },
+          {
+            "name": "Prancha frontal",
+            "sets": 3,
+            "reps": "30-40s"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Treino D - Glúteo + Core + Estabilidade (Sem agachar)",
+        "duration": "~60 min",
+        "observations": "Foco em estabilidade e glúteo isolado",
+        "exercises": [
+          {
+            "name": "Hip Thrust unilateral",
+            "sets": 4,
+            "reps": "8-10 cada perna"
+          },
+          {
+            "name": "Glúteo máquina ou cabo (extensão de quadril)",
+            "sets": 4,
+            "reps": "10-12"
+          },
+          {
+            "name": "Cadeira abdutora",
+            "sets": 4,
+            "reps": "15",
+            "notes": "Tronco levemente à frente"
+          },
+          {
+            "name": "Pull-through no cabo",
+            "sets": 3,
+            "reps": "10-12"
+          },
+          {
+            "name": "Abdominal infra no banco",
+            "sets": 3,
+            "reps": "15"
+          },
+          {
+            "name": "Prancha lateral",
+            "sets": 3,
+            "reps": "30s cada lado"
           }
         ]
       }
