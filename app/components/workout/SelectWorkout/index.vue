@@ -19,7 +19,9 @@ defineProps<{
       'bg-white border-primary border': !isCurrent && !isDone,
     }"
   >
-    <span v-if="isCurrent" class="text-xl font-semibold text-secondary">Treino de Hoje</span>
+    <span v-if="isCurrent" dataTestId="labelCurrentWorkout" class="text-xl font-semibold text-secondary"
+      >Treino de Hoje</span
+    >
 
     <div class="flex gap-2">
       <div class="flex items-center w-6 h-8">

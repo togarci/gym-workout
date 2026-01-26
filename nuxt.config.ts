@@ -12,7 +12,14 @@ export default defineNuxtConfig({
     },
   ],
 
-  modules: ['@nuxt/eslint', '@nuxt/image', '@pinia/nuxt', '@vite-pwa/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    '@vite-pwa/nuxt',
+    '@nuxt/test-utils/module',
+    'pinia-plugin-persistedstate/nuxt',
+  ],
 
   vite: {
     plugins: [tailwindcss()],

@@ -14,6 +14,7 @@ const clickOutside = (e: MouseEvent) => {
   <div
     v-if="isOpen"
     @click="clickOutside"
+    dataTestId="modal-container"
     class="absolute flex p-5 items-center justify-center top-0 right-0 w-screen h-screen z-20 bg-white/20 backdrop-blur-lg"
   >
     <div ref="refContainer" class="flex w-full shadow-custom flex-col bg-white rounded-2xl">
