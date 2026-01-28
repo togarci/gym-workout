@@ -10,9 +10,18 @@ const userName = route.params.userName;
 const exerciseId = route.params.exerciseId;
 
 const currentWorkout = ref();
+const isModalOpen = ref(false);
 const formValues = ref<{ [key: string]: boolean }>({});
 
-const isDisabledButton = ref(true);
+const validateForm = () => {
+  const isValid = Object.keys(formValues.value).every((key) => formValues.value[key]);
+
+  if (isValid) {
+    submitWorkout();
+  } else {
+    isModalOpen.value = true;
+  }
+};
 
 const submitWorkout = () => {
   let localWorkoutIds = localStorage.getItem('workoutData');
@@ -25,14 +34,6 @@ const submitWorkout = () => {
   }
   router.push(`/${userName}`);
 };
-
-watch(
-  formValues,
-  () => {
-    isDisabledButton.value = !Object.keys(formValues.value).every((key: string) => formValues.value[key] === true);
-  },
-  { deep: true }
-);
 
 onMounted(() => {
   if (!userName || !exerciseId) router.push('/404');
@@ -53,6 +54,10 @@ onMounted(() => {
 
 <template>
   <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
+    <Modal v-model="isModalOpen" title="Atenção" useConfirm @confirm="submitWorkout">
+      <span class="text-lg"> Alguns exercicios não foram concluidos, tem certeza que deseja finalizar o treino? </span>
+    </Modal>
+
     <NuxtLink :href="`/${userName}`" class="flex gap-2">
       <div class="w-6 flex items-center h-8">
         <ArrowLeft />
@@ -69,6 +74,6 @@ onMounted(() => {
       />
     </div>
 
-    <Button @click="submitWorkout" :disabled="isDisabledButton"> FINALIZAR TREINO </Button>
+    <Button @click="validateForm"> FINALIZAR TREINO </Button>
   </div>
 </template>

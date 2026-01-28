@@ -1,12 +1,20 @@
 <script lang="ts" setup>
 defineProps<{
   title: string;
+  useConfirm?: boolean;
 }>();
+
+const emits = defineEmits(['confirm']);
 const isOpen = defineModel();
 const refContainer = ref<Element | null>(null);
 
 const clickOutside = (e: MouseEvent) => {
   if (refContainer.value && !refContainer.value.contains(e.target as Node)) isOpen.value = false;
+};
+
+const setConfirm = () => {
+  emits('confirm');
+  isOpen.value = false;
 };
 </script>
 
@@ -28,6 +36,11 @@ const clickOutside = (e: MouseEvent) => {
 
       <div class="w-full p-5">
         <slot />
+      </div>
+
+      <div v-if="useConfirm" class="flex w-full gap-2 p-5">
+        <Button @click="isOpen = false" variant="secondary" size="sm" isFull> Cancelar </Button>
+        <Button @click="setConfirm" variant="primary" size="sm" isFull> Confirmar </Button>
       </div>
     </div>
   </div>

@@ -26,6 +26,7 @@ const {
       'bg-primary/60 text-white': disabled,
       'px-5 py-4 rounded-2xl': size == 'md',
       'px-3 py-2 rounded-xl': size == 'sm',
+      'w-full': isFull,
     }"
   >
     <slot />
