@@ -1,6 +1,6 @@
 import database from '~/states/data.workout.json';
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to, _) => {
   const userName = useCookie('userName');
   const userNameExist = database.some((dt) => dt.userName === userName.value);
 

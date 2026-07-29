@@ -20,8 +20,18 @@ const submitSignIn = () => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col px-4 gap-4">
-    <Input label="Nome de usuário" type="text" v-model="userName" name="email" placeholder="Digite o nome de usuário" />
-    <Button :disabled="userName.length === 0" @click="submitSignIn">ENTRAR</Button>
+  <div class="flex w-full max-w-desktop flex-col px-4 gap-4">
+    <Input
+      label="Nome de usuário"
+      type="text"
+      v-model="userName"
+      name="email"
+      placeholder="Digite o nome de usuário"
+    />
+    <Button
+      :disabled="userName.length === 0"
+      @click="submitSignIn"
+      >ENTRAR</Button
+    >
   </div>
 </template>

@@ -49,13 +49,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
-    <div class="flex w-full justify-between items-center">
+  <div class="flex px-5 py-10 min-h-screen items-center flex-col gap-8">
+    <div class="flex w-full md:bg-white md:p-6 max-w-desktop rounded-2xl justify-between items-center">
       <h1 class="text-secondary font-semibold text-3xl text-wrap line-clamp-1">Olá, {{ userName }} 🏋️‍♂️</h1>
-      <Button @click="logout" variant="secondary" size="sm">Sair</Button>
+      <Button
+        @click="logout"
+        variant="secondary"
+        size="sm"
+        >Sair</Button
+      >
     </div>
 
-    <div class="flex-1 flex flex-col gap-5">
+    <div class="flex-1 md:bg-white md:p-6 rounded-2xl flex flex-col w-full max-w-desktop gap-5">
       <SelectWorkout
         v-for="workout in selectedDataUser?.workouts"
         :key="workout.name"

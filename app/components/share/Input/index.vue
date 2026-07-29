@@ -12,7 +12,12 @@ const model = defineModel<any>();
 
 <template>
   <div class="flex flex-col w-full gap-2">
-    <label class="font-semibold text-lg px-1" v-if="label" :for="name?.replaceAll(' ', '-')">{{ label }}</label>
+    <label
+      class="font-semibold text-lg px-1"
+      v-if="label"
+      :for="name?.replaceAll(' ', '-')"
+      >{{ label }}</label
+    >
     <div
       class="w-full flex bg-white gap-1.5 items-center rounded-2xl h-15 py-2 px-4 border-2"
       :class="{ 'border-red-600': error, 'border-gray-600': !error }"

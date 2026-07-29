@@ -53,27 +53,36 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex px-5 py-10 min-h-screen flex-col gap-8">
-    <Modal v-model="isModalOpen" title="Atenção" useConfirm @confirm="submitWorkout">
+  <div class="flex items-center flex-col gap-8 px-5 py-10 min-h-screen">
+    <Modal
+      v-model="isModalOpen"
+      title="Atenção"
+      useConfirm
+      @confirm="submitWorkout"
+    >
       <span class="text-lg"> Alguns exercicios não foram concluidos, tem certeza que deseja finalizar o treino? </span>
     </Modal>
 
-    <NuxtLink :href="`/${userName}`" class="flex gap-2">
-      <div class="w-6 flex items-center h-8">
-        <ArrowLeft />
+    <div class="flex flex-col w-full max-w-desktop gap-5">
+      <NuxtLink
+        :href="`/${userName}`"
+        class="flex gap-2 md:bg-white/70 md:p-6 rounded-2xl items-center"
+      >
+        <div class="w-6 flex items-center h-8">
+          <ArrowLeft />
+        </div>
+        <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
+      </NuxtLink>
+
+      <div class="flex flex-1 flex-col gap-3 md:bg-white/70 md:p-6 rounded-2xl">
+        <ItemWorkout
+          v-for="(exercise, idx) in currentWorkout?.exercises"
+          v-model="formValues[`item${idx}`]"
+          :key="exercise.name"
+          :exercise="exercise"
+        />
       </div>
-      <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
-    </NuxtLink>
-
-    <div class="flex flex-1 flex-col gap-3">
-      <ItemWorkout
-        v-for="(exercise, idx) in currentWorkout?.exercises"
-        v-model="formValues[`item${idx}`]"
-        :key="exercise.name"
-        :exercise="exercise"
-      />
+      <Button @click="validateForm"> FINALIZAR TREINO </Button>
     </div>
-
-    <Button @click="validateForm"> FINALIZAR TREINO </Button>
   </div>
 </template>

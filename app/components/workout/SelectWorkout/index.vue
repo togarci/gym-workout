@@ -19,7 +19,10 @@ defineProps<{
       'bg-white border-primary border': !isCurrent && !isDone,
     }"
   >
-    <span v-if="isCurrent" dataTestId="labelCurrentWorkout" class="text-xl font-semibold text-secondary"
+    <span
+      v-if="isCurrent"
+      dataTestId="labelCurrentWorkout"
+      class="text-xl font-semibold text-secondary"
       >Treino de Hoje</span
     >
 
@@ -34,9 +37,16 @@ defineProps<{
         {{ workoutName }}
       </h1>
     </div>
-    <span v-if="workoutDuration" class="text-gray-500 font-medium">Duração: {{ workoutDuration }}</span>
+    <span
+      v-if="workoutDuration"
+      class="text-gray-500 font-medium"
+      >Duração: {{ workoutDuration }}</span
+    >
 
-    <div v-if="isDone" class="absolute text-primary font-bold text-sm bottom-5 flex gap-2 right-5">
+    <div
+      v-if="isDone"
+      class="absolute text-primary font-bold text-sm bottom-5 flex gap-2 right-5"
+    >
       Concluido
       <CheckboxSVG className="size-4 fill-primary" />
     </div>

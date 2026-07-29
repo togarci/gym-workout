@@ -20,7 +20,10 @@ const setCheck = (event: MouseEvent) => {
 
 <template>
   <div class="w-full">
-    <Modal v-model="isOpenModal" title="Observação">
+    <Modal
+      v-model="isOpenModal"
+      title="Observação"
+    >
       <span class="text-base">
         {{ exercise.obs }}
       </span>
@@ -32,7 +35,10 @@ const setCheck = (event: MouseEvent) => {
       class="flex flex-col px-5 py-4 bg-white rounded-2xl gap-2 shadow-custom"
     >
       <div class="flex items-center justify-between w-full">
-        <span dataTestId="item-name" class="line-clamp-1 font-semibold text-lg text-secondary">
+        <span
+          dataTestId="item-name"
+          class="line-clamp-1 font-semibold text-lg text-secondary"
+        >
           {{ exercise.name }}</span
         >
 
@@ -41,10 +47,18 @@ const setCheck = (event: MouseEvent) => {
 
       <div class="flex items-center text-base gap-2.5">
         <div class="flex items-center gap-1 text-gray-700">
-          <span dataTestId="item-serie" class="font-semibold">Serie:</span><span>{{ exercise.sets }}</span>
+          <span
+            dataTestId="item-serie"
+            class="font-semibold"
+            >Serie:</span
+          ><span>{{ exercise.sets }}</span>
         </div>
         <div class="flex items-center gap-1 text-gray-700">
-          <span dataTestId="item-rep" class="font-semibold">Rep:</span><span>{{ exercise.reps }}</span>
+          <span
+            dataTestId="item-rep"
+            class="font-semibold"
+            >Rep:</span
+          ><span>{{ exercise.reps }}</span>
         </div>
 
         <button
