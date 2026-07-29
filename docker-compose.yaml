@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  app:
+    build:
+      dockerfile: './docker/app.dockerfile'
+      context: .
+    image: gym-workout-dev:${APP_VERSION:-1.0.0}
+    container_name: gym-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - database
+    volumes:
+      - .:/application
+      - /application/node_modules # nao copia node modules
+      - /application/.nuxt # nao copia nuxt
+    environment:
+      - HOST=0.0.0.0
+      - DATABASE_URL=${DATABASE_URL}
+
+  database:
+    build:
+      dockerfile: './docker/db.dockerfile'
+      context: .
+    image: gym-workout-db:${DB_VERSION:-1.0.0}
+    container_name: gym-db
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gym_workout

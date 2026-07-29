@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  users User[]
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  userName  String    @unique
+  email     String?   @unique
+  password  String?
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  roleId    Int?
+  role      Role?     @relation(fields: [roleId], references: [id])
+  workouts  Workout[]
+}
+
+model Workout {
+  id          Int               @id @default(autoincrement())
+  name        String
+  description String?
+  userId      Int
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercises   WorkoutExercise[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model Exercise {
+  id          Int               @id @default(autoincrement())
+  name        String            @unique // Ex: "Supino Reto"
+  muscleGroup String? // Ex: "Peito"
+  workouts    WorkoutExercise[]
+  createdAt   DateTime          @default(now())
+}
+
+model WorkoutExercise {
+  id          Int      @id @default(autoincrement())
+  workoutId   Int
+  workout     Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  exerciseId  Int
+  exercise    Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  sets        Int      @default(3)
+  reps        String   @default("10") // String para permitir valores como "8-12" ou "Falha"
+  restTime    Int? // Tempo de descanso em segundos
+  order       Int      @default(0) // Ordem do exercício no treino
+  observation String?
+  tags        String[]
+}

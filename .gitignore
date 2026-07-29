@@ -25,6 +25,6 @@ logs
 
 /app/generated/prisma
 
-/app/generated/prisma
+/pgdata
 
 .vscode

@@ -2,6 +2,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+    public: {
+      databaseUrl: process.env.DATABASE_URL,
+    },
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
