@@ -2,9 +2,10 @@
 defineProps<{
   exercise: {
     name: string;
-    sets: number;
-    reps: number;
+    sets: number | string;
+    reps: number | string;
     obs?: string;
+    notes?: string;
   };
 }>();
 

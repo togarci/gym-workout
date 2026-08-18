@@ -1,3 +1,5 @@
+import { useNuxtApp } from '#app';
+import type { AxiosInstance } from 'axios';
 import type {
   LoginPayload,
   LoginResponse,
@@ -11,42 +13,39 @@ import type {
 } from './types';
 
 export async function loginUser(payload: LoginPayload): Promise<LoginResponse> {
-  return await $fetch<LoginResponse>('/api/user/login', {
-    method: 'POST',
-    body: payload,
-  });
+  const { $api } = useNuxtApp();
+  const response = await ($api as AxiosInstance).post<LoginResponse>('/api/user/login', payload);
+  return response.data;
 }
 
 export async function registerUser(payload: RegisterPayload): Promise<RegisterResponse> {
-  return await $fetch<RegisterResponse>('/api/user/register', {
-    method: 'POST',
-    body: payload,
-  });
+  const { $api } = useNuxtApp();
+  const response = await ($api as AxiosInstance).post<RegisterResponse>('/api/user/register', payload);
+  return response.data;
 }
 
 export async function revalidateToken(refreshToken?: string): Promise<RevalidateResponse> {
+  const { $api } = useNuxtApp();
   const headers: Record<string, string> = {};
   if (refreshToken) {
     headers['x-refresh-token'] = refreshToken;
   }
-  return await $fetch<RevalidateResponse>('/api/user/revalidate', {
-    method: 'GET',
-    headers,
-  });
+  const response = await ($api as AxiosInstance).get<RevalidateResponse>('/api/user/revalidate', { headers });
+  return response.data;
 }
 
 export async function updateUser(payload: UpdateUserPayload): Promise<UpdateUserResponse> {
-  return await $fetch<UpdateUserResponse>('/api/user/update', {
-    method: 'PUT',
-    body: payload,
-  });
+  const { $api } = useNuxtApp();
+  const response = await ($api as AxiosInstance).put<UpdateUserResponse>('/api/user/update', payload);
+  return response.data;
 }
 
 export async function deleteUser(payload: DeleteUserPayload): Promise<DeleteUserResponse> {
-  return await $fetch<DeleteUserResponse>('/api/user/delete', {
-    method: 'DELETE',
-    body: payload,
+  const { $api } = useNuxtApp();
+  const response = await ($api as AxiosInstance).delete<DeleteUserResponse>('/api/user/delete', {
+    data: payload,
   });
+  return response.data;
 }
 
 

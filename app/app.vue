@@ -7,9 +7,12 @@ const userName = useCookie('userName');
 function setUserNameOnCoockie() {
   const currentPath = router.currentRoute.value.path;
   const localUserName = localStorage.getItem('userName');
-  const userNameExist = database.some((dt) => dt.userName === localUserName);
+  const accessToken = useCookie('accessToken').value;
+  
+  // Considera válido se tiver token OU se estiver no mock de fallback
+  const isValidUser = !!accessToken || database.some((dt) => dt.userName === localUserName);
 
-  if (userNameExist && !currentPath.includes(String(localUserName))) {
+  if (localUserName && isValidUser && !currentPath.includes(String(localUserName))) {
     userName.value = localUserName;
     router.push(`/${localUserName}`);
   }

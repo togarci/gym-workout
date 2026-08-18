@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import ItemWorkoutSkeleton from '~/components/workout/ItemWorkout/ItemWorkoutSkeleton.vue';
 import database from '~/states/data.workout.json';
+import { useWorkoutStore } from '~/stores/workout';
 
 const route = useRoute();
 const router = useRouter();
+const workoutStore = useWorkoutStore();
 
 const userName = route.params.userName;
 const exerciseId = route.params.exerciseId;
@@ -35,20 +38,33 @@ function submitWorkout() {
   router.push(`/${userName}`);
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (!userName || !exerciseId) router.push('/404');
+  
+  const name = Array.isArray(userName) ? userName[0] : userName;
+  
+  const workoutData = await workoutStore.fetchWorkoutById(Number(exerciseId));
 
-  const findUserData = database?.find((workT) => workT.userName === userName);
-  if (!findUserData) router.push('/404');
+  if (!workoutData) {
+    router.push(`/${userName}`);
+    return;
+  }
 
-  const workoutData = findUserData?.workouts.find((w) => w.id === Number(exerciseId));
-  if (!workoutData) router.push('/404');
+  const mappedExercises = workoutData.exercises.map((ex: any) => ({
+    name: ex.exercise?.name || 'Exercício Desconhecido',
+    sets: ex.sets,
+    reps: ex.reps,
+    obs: ex.observation,
+  }));
 
-  workoutData?.exercises.forEach((_, idx) => {
+  mappedExercises.forEach((_: any, idx: number) => {
     formValues.value[`item${idx}`] = false;
   });
 
-  currentWorkout.value = workoutData;
+  currentWorkout.value = {
+    ...workoutData,
+    exercises: mappedExercises,
+  };
 });
 </script>
 
@@ -75,12 +91,17 @@ onMounted(() => {
       </NuxtLink>
 
       <div class="flex flex-1 flex-col gap-3 md:bg-white/70 md:p-6 rounded-2xl">
-        <ItemWorkout
-          v-for="(exercise, idx) in currentWorkout?.exercises"
-          v-model="formValues[`item${idx}`]"
-          :key="exercise.name"
-          :exercise="exercise"
-        />
+        <template v-if="workoutStore.isLoading">
+          <ItemWorkoutSkeleton v-for="i in 4" :key="i" />
+        </template>
+        <template v-else>
+          <ItemWorkout
+            v-for="(exercise, idx) in currentWorkout?.exercises"
+            v-model="formValues[`item${idx}`]"
+            :key="exercise.name"
+            :exercise="exercise"
+          />
+        </template>
       </div>
       <Button @click="validateForm"> FINALIZAR TREINO </Button>
     </div>

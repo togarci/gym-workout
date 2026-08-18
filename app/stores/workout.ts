@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getWorkouts, type Workout } from '~/services/workout';
+import { getWorkouts, getWorkout, type Workout } from '~/services/workout';
 
 export const useWorkoutStore = defineStore('workout', () => {
   const workouts = ref<Workout[]>([]);
@@ -21,6 +21,21 @@ export const useWorkoutStore = defineStore('workout', () => {
     }
   }
 
+  async function fetchWorkoutById(id: number) {
+    isLoading.value = true;
+    error.value = null;
+    try {
+      const response = await getWorkout(id);
+      return response.data;
+    } catch (err: any) {
+      console.error('Error fetching workout by ID in store:', err);
+      error.value = err?.message || 'Erro ao carregar treino.';
+      return null;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   function clearWorkouts() {
     workouts.value = [];
     error.value = null;
@@ -31,6 +46,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     isLoading,
     error,
     fetchWorkouts,
+    fetchWorkoutById,
     clearWorkouts,
   };
 });
