@@ -1,26 +1,30 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router';
-import database from '~/states/data.workout.json';
-import type { DatabaseTypes } from '~/states/type';
+import { useUserStore } from '~/stores/user';
+import { useWorkoutStore } from '~/stores/workout';
 
 const route = useRoute();
 const router = useRouter();
 const userName = route.params.userName;
+const userStore = useUserStore();
+const workoutStore = useWorkoutStore();
 
-const selectedDataUser = ref<DatabaseTypes>();
 const allWorkoutIdsDone = ref<Array<number>>([]);
 const nextWorkoutId = computed(
-  () => selectedDataUser.value?.workouts.find((workout) => !allWorkoutIdsDone.value.includes(workout.id))?.id
+  () => workoutStore.workouts.find((workout) => !allWorkoutIdsDone.value.includes(workout.id))?.id
 );
 
-const resetWorkoutOnAllComplete = () => {
-  if (selectedDataUser.value?.workouts.every((item) => allWorkoutIdsDone.value.includes(item.id))) {
+function resetWorkoutOnAllComplete() {
+  if (
+    workoutStore.workouts.length > 0 &&
+    workoutStore.workouts.every((item) => allWorkoutIdsDone.value.includes(item.id))
+  ) {
     allWorkoutIdsDone.value = [];
     localStorage.removeItem('workoutData');
   }
-};
+}
 
-const getDataByLocalStorage = () => {
+function getDataByLocalStorage() {
   const localData = localStorage.getItem('workoutData');
   if (localData) {
     allWorkoutIdsDone.value = JSON.parse(localData);
@@ -28,22 +32,27 @@ const getDataByLocalStorage = () => {
   } else {
     allWorkoutIdsDone.value = [];
   }
-};
+}
 
-const logout = () => {
+function logout() {
+  const accessTokenCookie = useCookie('accessToken', { httpOnly: true });
+  const refreshTokenCookie = useCookie('refreshToken', { httpOnly: true });
+  accessTokenCookie.value = '';
+  refreshTokenCookie.value = '';
+
+  userStore.clearUser();
   localStorage.removeItem('userName');
-  const userNameCookie = useCookie('userName');
-  userNameCookie.value = '';
   router.push('/');
-};
+}
 
-onMounted(() => {
-  if (!userName) router.push('/404');
+onMounted(async () => {
+  const name = Array.isArray(userName) ? userName[0] : userName;
+  if (!name) {
+    router.push('/404');
+    return;
+  }
 
-  const findWorkout = database?.find((workT) => workT.userName === userName);
-  if (!findWorkout) router.push('/404');
-
-  selectedDataUser.value = findWorkout;
+  await workoutStore.fetchWorkouts(name);
   getDataByLocalStorage();
 });
 </script>
@@ -62,8 +71,8 @@ onMounted(() => {
 
     <div class="flex-1 md:bg-white md:p-6 rounded-2xl flex flex-col w-full max-w-desktop gap-5">
       <SelectWorkout
-        v-for="workout in selectedDataUser?.workouts"
-        :key="workout.name"
+        v-for="workout in workoutStore.workouts"
+        :key="workout.id"
         :workoutName="workout.name"
         :link="`/${userName}/${workout.id}`"
         :isCurrent="workout.id === nextWorkoutId"
@@ -71,6 +80,7 @@ onMounted(() => {
       />
     </div>
 
-    <span class="text-gray-700 text-lg">Treinos: {{ selectedDataUser?.workouts?.length }}</span>
+    <span class="text-gray-700 text-lg">Treinos: {{ workoutStore.workouts.length }}</span>
   </div>
 </template>
+

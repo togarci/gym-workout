@@ -12,10 +12,10 @@ const isChecked = defineModel();
 const obsBtnRef = ref<HTMLButtonElement>();
 const isOpenModal = ref(false);
 
-const setCheck = (event: MouseEvent) => {
+function setCheck(event: MouseEvent) {
   const eventTarget = event.target as HTMLElement;
   if (!obsBtnRef.value?.contains(eventTarget) && eventTarget !== obsBtnRef.value) isChecked.value = !isChecked.value;
-};
+}
 </script>
 
 <template>

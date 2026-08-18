@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue';
+
 const { type = 'text' } = defineProps<{
   label?: string;
   name?: string;
@@ -8,6 +10,15 @@ const { type = 'text' } = defineProps<{
 }>();
 
 const model = defineModel<any>();
+
+const showPassword = ref(false);
+
+const inputType = computed(() => {
+  if (type === 'password') {
+    return showPassword.value ? 'text' : 'password';
+  }
+  return type;
+});
 </script>
 
 <template>
@@ -24,13 +35,23 @@ const model = defineModel<any>();
     >
       <input
         :id="name?.replaceAll(' ', '-')"
-        :type="type"
+        :type="inputType"
         :name="name"
         v-model="model"
         data-testId="custom-text-input"
         :placeholder="placeholder"
         class="size-full placeholder:text-600 font-medium text-base"
       />
+      <button
+        v-if="type === 'password'"
+        type="button"
+        @click="showPassword = !showPassword"
+        class="cursor-pointer focus:outline-none flex items-center justify-center"
+        data-testId="toggle-password-visibility"
+      >
+        <CloseEye v-if="showPassword" />
+        <EyeSVG v-else />
+      </button>
     </div>
 
     <span class="text-red-400 text-xs font-semibold">{{ error }}</span>

@@ -59,4 +59,32 @@ describe('Input', () => {
     expect(wrapper.find('.border-red-600').exists()).toBe(true);
     expect(wrapper.find('.border-gray-600').exists()).toBe(false);
   });
+
+  it('deve alternar a visibilidade da senha e os ícones EyeSVG/CloseEye quando type="password"', async () => {
+    const wrapper = mount(Input, {
+      props: {
+        type: 'password',
+      },
+      global: {
+        stubs: {
+          EyeSVG: true,
+          CloseEye: true,
+        },
+      },
+    });
+
+    const input = wrapper.find('input');
+    expect(input.attributes('type')).toBe('password');
+
+    const toggleButton = wrapper.find('[data-testId="toggle-password-visibility"]');
+    expect(toggleButton.exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'EyeSVG' }).exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'CloseEye' }).exists()).toBe(false);
+
+    await toggleButton.trigger('click');
+
+    expect(input.attributes('type')).toBe('text');
+    expect(wrapper.findComponent({ name: 'CloseEye' }).exists()).toBe(true);
+    expect(wrapper.findComponent({ name: 'EyeSVG' }).exists()).toBe(false);
+  });
 });

@@ -13,7 +13,7 @@ const currentWorkout = ref();
 const isModalOpen = ref(false);
 const formValues = ref<{ [key: string]: boolean }>({});
 
-const validateForm = () => {
+function validateForm() {
   const isValid = Object.keys(formValues.value).every((key) => formValues.value[key]);
 
   if (isValid) {
@@ -21,9 +21,9 @@ const validateForm = () => {
   } else {
     isModalOpen.value = true;
   }
-};
+}
 
-const submitWorkout = () => {
+function submitWorkout() {
   let localWorkoutIds = localStorage.getItem('workoutData');
   if (localWorkoutIds) {
     const workoutIds = JSON.parse(localWorkoutIds);
@@ -33,7 +33,7 @@ const submitWorkout = () => {
     localStorage.setItem('workoutData', JSON.stringify([Number(exerciseId)]));
   }
   router.push(`/${userName}`);
-};
+}
 
 onMounted(() => {
   if (!userName || !exerciseId) router.push('/404');

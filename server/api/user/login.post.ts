@@ -11,9 +11,9 @@ const prisma = new PrismaClient({ adapter });
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { email, userName, password } = body;
+    const { userName, password } = body;
 
-    if ((!email && !userName) || !password) {
+    if (!userName || !password) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Bad Request',
@@ -24,7 +24,6 @@ export default defineEventHandler(async (event) => {
     const user = await prisma.user.findFirst({
       where: {
         OR: [
-          email ? { email } : undefined,
           userName ? { userName } : undefined,
         ].filter(Boolean) as any,
       },

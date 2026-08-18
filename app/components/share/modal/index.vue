@@ -8,14 +8,14 @@ const emits = defineEmits(['confirm']);
 const isOpen = defineModel();
 const refContainer = ref<Element | null>(null);
 
-const clickOutside = (e: MouseEvent) => {
+function clickOutside(e: MouseEvent) {
   if (refContainer.value && !refContainer.value.contains(e.target as Node)) isOpen.value = false;
-};
+}
 
-const setConfirm = () => {
+function setConfirm() {
   emits('confirm');
   isOpen.value = false;
-};
+}
 </script>
 
 <template>

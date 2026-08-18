@@ -4,7 +4,7 @@ import database from '~/states/data.workout.json';
 const router = useRouter();
 const userName = useCookie('userName');
 
-const setUserNameOnCoockie = () => {
+function setUserNameOnCoockie() {
   const currentPath = router.currentRoute.value.path;
   const localUserName = localStorage.getItem('userName');
   const userNameExist = database.some((dt) => dt.userName === localUserName);
@@ -13,7 +13,7 @@ const setUserNameOnCoockie = () => {
     userName.value = localUserName;
     router.push(`/${localUserName}`);
   }
-};
+}
 
 onBeforeMount(() => {
   if (!userName.value) setUserNameOnCoockie();
