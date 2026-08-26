@@ -57,3 +57,8 @@ export interface DeleteUserPayload {
 export interface DeleteUserResponse {
   status: string;
 }
+
+export interface LogoutResponse {
+  statusCode: number;
+  message: string;
+}

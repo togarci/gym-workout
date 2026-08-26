@@ -64,14 +64,39 @@ export default defineEventHandler(async (event) => {
     const accessToken = jwt.sign(
       { id: user.id, role: user.roleId },
       String(config.jwtSecret),
-      { expiresIn: '1d' }
+      { expiresIn: '7d' }
     );
 
     const refreshToken = jwt.sign(
       { id: user.id },
       String(config.jwtSecret),
-      { expiresIn: '5d' }
+      { expiresIn: '30d' }
     );
+
+    // Grava cookies HttpOnly no navegador
+    setCookie(event, 'accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 dias
+      path: '/',
+    });
+
+    setCookie(event, 'refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30, // 30 dias
+      path: '/',
+    });
+
+    setCookie(event, 'userName', user.userName, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    });
 
     return {
       statusCode: 200,

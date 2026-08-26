@@ -8,29 +8,37 @@ const config = useRuntimeConfig();
 const adapter = new PrismaPg({ connectionString: String(config.public.databaseUrl) });
 const prisma = new PrismaClient({ adapter });
 
+
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);
   const pathname = url.pathname;
 
   const matchedRoute = protectedRoutes.find((route) => {
+    if (route.path.includes(':id')) {
+      const basePath = route.path.replace(':id', '');
+      const hasNumberId = /\d+$/.test(pathname);
+      return pathname.startsWith(basePath) && hasNumberId;
+    }
+
     if (route.exact) {
       return pathname === route.path;
     }
+
     return pathname === route.path || pathname.startsWith(route.path + '/');
   });
 
   if (matchedRoute) {
     const authHeader = getHeader(event, 'authorization');
+    const headerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : authHeader;
+    const token = getCookie(event, 'accessToken') || headerToken;
 
-    if (!authHeader) {
+    if (!token) {
       throw createError({
         statusCode: 401,
         statusMessage: 'Unauthorized',
         message: 'Token de autenticação não fornecido.',
       });
     }
-
-    const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : authHeader;
 
     let decoded: any;
     try {

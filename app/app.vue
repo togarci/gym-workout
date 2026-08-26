@@ -2,15 +2,17 @@
 import database from '~/states/data.workout.json';
 
 const router = useRouter();
-const userName = useCookie('userName');
+const userName = useCookie('userName', {
+  maxAge: 60 * 60 * 24 * 30, // 30 dias
+  path: '/',
+  sameSite: 'lax',
+});
 
 function setUserNameOnCoockie() {
   const currentPath = router.currentRoute.value.path;
-  const localUserName = localStorage.getItem('userName');
-  const accessToken = useCookie('accessToken').value;
+  const localUserName = localStorage.getItem('userName') || userName.value;
   
-  // Considera válido se tiver token OU se estiver no mock de fallback
-  const isValidUser = !!accessToken || database.some((dt) => dt.userName === localUserName);
+  const isValidUser = !!localUserName;
 
   if (localUserName && isValidUser && !currentPath.includes(String(localUserName))) {
     userName.value = localUserName;

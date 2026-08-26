@@ -2,6 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '~/stores/user';
 import { useWorkoutStore } from '~/stores/workout';
+import { logoutUser } from '~/services/user';
 
 const route = useRoute();
 const router = useRouter();
@@ -34,15 +35,16 @@ function getDataByLocalStorage() {
   }
 }
 
-function logout() {
-  const accessTokenCookie = useCookie('accessToken', { httpOnly: true });
-  const refreshTokenCookie = useCookie('refreshToken', { httpOnly: true });
-  accessTokenCookie.value = '';
-  refreshTokenCookie.value = '';
-
-  userStore.clearUser();
-  localStorage.removeItem('userName');
-  router.push('/');
+async function logout() {
+  try {
+    await logoutUser();
+  } catch (err) {
+    console.error('Error during logout:', err);
+  } finally {
+    userStore.clearUser();
+    localStorage.removeItem('userName');
+    router.push('/auth/signIn');
+  }
 }
 
 onMounted(async () => {

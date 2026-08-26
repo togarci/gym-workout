@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import ItemWorkoutSkeleton from '~/components/workout/ItemWorkout/ItemWorkoutSkeleton.vue';
-import database from '~/states/data.workout.json';
 import { useWorkoutStore } from '~/stores/workout';
 
 const route = useRoute();
@@ -40,8 +39,6 @@ function submitWorkout() {
 
 onMounted(async () => {
   if (!userName || !exerciseId) router.push('/404');
-  
-  const name = Array.isArray(userName) ? userName[0] : userName;
   
   const workoutData = await workoutStore.fetchWorkoutById(Number(exerciseId));
 

@@ -8,7 +8,6 @@ const router = useRouter();
 const userName = ref<string>('');
 const password = ref<string>('');
 const isLoading = ref<boolean>(false);
-const cookie = useCookie('userName');
 const userStore = useUserStore();
 
 const isSubmitDisabled = computed(() => {
@@ -29,17 +28,8 @@ async function submitSignIn() {
     });
 
     if (response?.data) {
-      const { accessToken, refreshToken, ...userData } = response.data;
-      userStore.setUser(userData);
-
-      const accessTokenCookie = useCookie('accessToken', { httpOnly: true });
-      const refreshTokenCookie = useCookie('refreshToken', { httpOnly: true });
-
-      accessTokenCookie.value = accessToken;
-      refreshTokenCookie.value = refreshToken;
-
+      userStore.setUser(response.data);
       localStorage.setItem('userName', response.data.userName);
-      cookie.value = response.data.userName;
       
       router.push(`/${response.data.userName}`);
     }

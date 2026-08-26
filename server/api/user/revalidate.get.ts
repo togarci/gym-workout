@@ -9,7 +9,7 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   try {
-    const refreshTokenInput = getHeader(event, 'x-refresh-token');
+    const refreshTokenInput = getCookie(event, 'refreshToken');
 
     if (!refreshTokenInput) {
       throw createError({
@@ -50,14 +50,38 @@ export default defineEventHandler(async (event) => {
     const accessToken = jwt.sign(
       { id: user.id, role: user.roleId },
       String(config.jwtSecret),
-      { expiresIn: '1d' }
+      { expiresIn: '7d' }
     );
 
     const refreshToken = jwt.sign(
       { id: user.id },
       String(config.jwtSecret),
-      { expiresIn: '5d' }
+      { expiresIn: '30d' }
     );
+
+    setCookie(event, 'accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7,
+      path: '/',
+    });
+
+    setCookie(event, 'refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    });
+
+    setCookie(event, 'userName', user.userName, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    });
 
     return {
       statusCode: 200,

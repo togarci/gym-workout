@@ -10,6 +10,7 @@ import type {
   UpdateUserResponse,
   DeleteUserPayload,
   DeleteUserResponse,
+  LogoutResponse,
 } from './types';
 
 export async function loginUser(payload: LoginPayload): Promise<LoginResponse> {
@@ -24,13 +25,9 @@ export async function registerUser(payload: RegisterPayload): Promise<RegisterRe
   return response.data;
 }
 
-export async function revalidateToken(refreshToken?: string): Promise<RevalidateResponse> {
+export async function revalidateToken(): Promise<RevalidateResponse> {
   const { $api } = useNuxtApp();
-  const headers: Record<string, string> = {};
-  if (refreshToken) {
-    headers['x-refresh-token'] = refreshToken;
-  }
-  const response = await ($api as AxiosInstance).get<RevalidateResponse>('/api/user/revalidate', { headers });
+  const response = await ($api as AxiosInstance).get<RevalidateResponse>('/api/user/revalidate');
   return response.data;
 }
 
@@ -45,6 +42,12 @@ export async function deleteUser(payload: DeleteUserPayload): Promise<DeleteUser
   const response = await ($api as AxiosInstance).delete<DeleteUserResponse>('/api/user/delete', {
     data: payload,
   });
+  return response.data;
+}
+
+export async function logoutUser(): Promise<LogoutResponse> {
+  const { $api } = useNuxtApp();
+  const response = await ($api as AxiosInstance).post<LogoutResponse>('/api/user/logout');
   return response.data;
 }
 
