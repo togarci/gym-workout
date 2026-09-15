@@ -83,7 +83,6 @@ describe('FormSignIn', () => {
       userName: 'togarci',
       password: '123456',
     });
-    expect(localStorage.getItem('userName')).toBe('togarci');
     expect(toast.error).not.toHaveBeenCalled();
   });
 
@@ -112,7 +111,6 @@ describe('FormSignIn', () => {
       userName: 'ToGarCi',
       password: '123456',
     });
-    expect(localStorage.getItem('userName')).toBe('togarci');
     expect(toast.error).not.toHaveBeenCalled();
   });
 
@@ -133,6 +131,5 @@ describe('FormSignIn', () => {
     expect(toast.error).toHaveBeenCalledWith('Usuário não encontrado');
     expect((inputs[0]?.element as HTMLInputElement).value).toBe('');
     expect((inputs[1]?.element as HTMLInputElement).value).toBe('');
-    expect(localStorage.getItem('userName')).toBeNull();
   });
 });

@@ -42,7 +42,8 @@ async function logout() {
     console.error('Error during logout:', err);
   } finally {
     userStore.clearUser();
-    localStorage.removeItem('userName');
+    const userNameCookie = useCookie<string | null>('userName');
+    userNameCookie.value = null;
     router.push('/auth/signIn');
   }
 }

@@ -23,6 +23,13 @@ export default defineEventHandler(async (event) => {
       },
     });
 
+    if (!workouts || workouts.length === 0) {
+      return createError({
+        statusCode: 404,
+        statusMessage: 'Workouts not found',
+      });
+    }
+
     return {
       statusCode: 200,
       data: workouts,

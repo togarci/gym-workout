@@ -7,18 +7,18 @@ export interface ProtectedRoute {
 export const protectedRoutes: ProtectedRoute[] = [
   // Workout
   { path: '/api/workout/:id' },
-  { path: '/api/workout/get', exact: true },
-  { path: '/api/workout/register', roles: ['admin'], exact: true },
-  { path: '/api/workout/update', roles: ['admin'], exact: true },
+  { path: '/api/workout/get' },
+  { path: '/api/workout/register', roles: ['admin'] },
+  { path: '/api/workout/update', roles: ['admin'] },
 
   // Exercise
   { path: '/api/exercise/:id' },
-  { path: '/api/exercise/get', exact: true },
-  { path: '/api/exercise/register', roles: ['admin'], exact: true },
-  { path: '/api/exercise/update', roles: ['admin'], exact: true },
+  { path: '/api/exercise/get' },
+  { path: '/api/exercise/register', roles: ['admin'] },
+  { path: '/api/exercise/update', roles: ['admin'] },
 
   // User
-  { path: '/api/user/register', roles: ['admin'], exact: true },
-  { path: '/api/user/update', roles: ['admin'], exact: true },
-  { path: '/api/user/delete', roles: ['admin'], exact: true },
+  { path: '/api/user/register', roles: ['admin'] },
+  { path: '/api/user/update', roles: ['admin'] },
+  { path: '/api/user/delete', roles: ['admin'] },
 ];

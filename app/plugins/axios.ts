@@ -2,7 +2,7 @@ import axios from 'axios';
 import { defineNuxtPlugin, useCookie, useRouter } from '#app';
 import { useUserStore } from '~/stores/user';
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   const api = axios.create({
     withCredentials: true,
   });
@@ -12,7 +12,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     async (error) => {
       const originalRequest = error.config;
 
-      // Se der 401 e não tentamos revalidar ainda
+      // Se der 401 tentamos revalidar ainda
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
@@ -26,7 +26,8 @@ export default defineNuxtPlugin((nuxtApp) => {
           // Revalidação falhou, limpa estado e redireciona para login
           const userStore = useUserStore();
           userStore.clearUser();
-          localStorage.removeItem('userName');
+          const userNameCookie = useCookie<string | null>('userName');
+          userNameCookie.value = null;
 
           const router = useRouter();
           router.push('/auth/signIn');

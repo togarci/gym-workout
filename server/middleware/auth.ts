@@ -24,13 +24,12 @@ export default defineEventHandler(async (event) => {
       return pathname === route.path;
     }
 
-    return pathname === route.path || pathname.startsWith(route.path + '/');
+    return pathname.startsWith(route.path);
   });
 
+
   if (matchedRoute) {
-    const authHeader = getHeader(event, 'authorization');
-    const headerToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : authHeader;
-    const token = getCookie(event, 'accessToken') || headerToken;
+    const token = getCookie(event, 'accessToken')
 
     if (!token) {
       throw createError({

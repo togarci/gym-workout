@@ -26,6 +26,13 @@ export default defineEventHandler(async (event) => {
       exercises = await prisma.exercise.findMany();
     }
 
+    if (!exercises || exercises.length === 0) {
+      return createError({
+        statusCode: 404,
+        statusMessage: 'Exercises not found',
+      });
+    }
+
     return {
       statusCode: 200,
       data: exercises,

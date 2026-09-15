@@ -29,7 +29,9 @@ async function submitSignIn() {
 
     if (response?.data) {
       userStore.setUser(response.data);
-      localStorage.setItem('userName', response.data.userName);
+      
+      const userNameCookie = useCookie<string | null>('userName');
+      userNameCookie.value = response.data.userName;
       
       router.push(`/${response.data.userName}`);
     }
