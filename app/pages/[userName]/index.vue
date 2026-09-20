@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '~/stores/user';
-import { useWorkoutStore } from '~/stores/workout';
+import { useUserStore } from '~/stores/user/index';
+import { useWorkoutStore } from '~/stores/workout/index';
 import { logoutUser } from '~/services/user';
 
 const route = useRoute();
