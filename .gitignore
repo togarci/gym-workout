@@ -28,3 +28,8 @@ logs
 /pgdata
 
 .vscode
+
+# Docker
+docker/
+docker-compose.yaml
+docker-entrypoint.sh
