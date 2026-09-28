@@ -56,5 +56,6 @@ model WorkoutExercise {
   restTime    Int? // Tempo de descanso em segundos
   order       Int      @default(0) // Ordem do exercício no treino
   observation String?
+  weight      String?
   tags        String[]
 }

@@ -47,10 +47,12 @@ onMounted(async () => {
   }
 
   const mappedExercises = workoutData.exercises.map((ex: any) => ({
+    id: ex.id,
     name: ex.exercise?.name || 'Exercício Desconhecido',
     sets: ex.sets,
     reps: ex.reps,
     obs: ex.observation,
+    weight: ex.weight,
   }));
 
   mappedExercises.forEach((_: any, idx: number) => {
@@ -62,6 +64,13 @@ onMounted(async () => {
     exercises: mappedExercises,
   };
 });
+
+function handleUpdateWeight(exerciseId: number, weight: string) {
+  if (currentWorkout.value) {
+    const ex = currentWorkout.value.exercises.find((e: any) => e.id === exerciseId);
+    if (ex) ex.weight = weight;
+  }
+}
 </script>
 
 <template>
@@ -83,8 +92,8 @@ onMounted(async () => {
         <div class="w-6 flex items-center h-8">
           <ArrowLeft />
         </div>
-        <h1 v-if="workoutStore.isLoading" class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
-        <div v-else class="h-6 animate-pulse bg-gray-200 rounded-md w-full"></div>
+        <div v-if="workoutStore.isLoading" class="h-6 animate-pulse bg-gray-200 rounded-md w-full"></div>
+        <h1 v-else class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
       </NuxtLink>
 
       <div class="flex flex-1 flex-col gap-3 md:bg-white/70 md:p-6 rounded-2xl">
@@ -97,6 +106,7 @@ onMounted(async () => {
             v-model="formValues[`item${idx}`]"
             :key="exercise.name"
             :exercise="exercise"
+            @updateWeight="handleUpdateWeight"
           />
         </template>
       </div>
