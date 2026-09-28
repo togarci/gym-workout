@@ -11,6 +11,10 @@ RUN corepack enable
 # Copia os arquivos de definição de dependências para aproveitar o cache
 COPY package.json yarn.lock ./
 
+# Copia o schema do Prisma e o config do Nuxt para que os scripts de postinstall funcionem
+COPY prisma ./prisma
+COPY nuxt.config.ts ./
+
 # Instala as dependências do projeto
 RUN yarn install --frozen-lockfile
 

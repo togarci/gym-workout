@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import ItemWorkoutSkeleton from '~/components/workout/ItemWorkout/ItemWorkoutSkeleton.vue';
 import { useWorkoutStore } from '~/stores/workout';
 
 const route = useRoute();
@@ -79,12 +78,13 @@ onMounted(async () => {
     <div class="flex flex-col w-full max-w-desktop gap-5">
       <NuxtLink
         :href="`/${userName}`"
-        class="flex gap-2 md:bg-white/70 md:p-6 rounded-2xl items-center"
+        class="flex gap-2 bg-white/70 md:p-6 rounded-2xl items-center"
       >
         <div class="w-6 flex items-center h-8">
           <ArrowLeft />
         </div>
-        <h1 class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
+        <h1 v-if="workoutStore.isLoading" class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
+        <div v-else class="h-6 animate-pulse bg-gray-200 rounded-md w-full"></div>
       </NuxtLink>
 
       <div class="flex flex-1 flex-col gap-3 md:bg-white/70 md:p-6 rounded-2xl">
