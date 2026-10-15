@@ -51,28 +51,25 @@ function navigateToSignUp() {
 <template>
   <div class="flex w-full max-w-desktop flex-col px-4 gap-4">
     <Input
-      label="Nome de usuário"
       type="text"
       v-model="userName"
       name="userName"
       placeholder="Digite o nome de usuário"
     />
     <Input
-      label="Senha"
       type="password"
       v-model="password"
       name="password"
       placeholder="Digite a sua senha"
     />
+
+    <a class="w-full text-right text-secondary" href="/auth/personal/signIn">Sou Personal</a>
+    
     <Button
       :disabled="isSubmitDisabled || isLoading"
       @click="submitSignIn"
-      >ENTRAR</Button
     >
-    <Button
-      variant="secondary"
-      @click="navigateToSignUp"
-      >CRIAR CONTA</Button
-    >
+      ENTRAR
+    </Button>
   </div>
 </template>

@@ -3,7 +3,19 @@ DECLARE
     v_user_id INT;
     v_workout_id INT;
     v_exercise_id INT;
+    v_role_id INT;
 BEGIN
+    -- 0. Insert Roles
+    SELECT id INTO v_role_id FROM "Role" WHERE "name" = 'Admin';
+    IF NOT FOUND THEN
+        INSERT INTO "Role" ("name") VALUES ('Admin');
+    END IF;
+
+    SELECT id INTO v_role_id FROM "Role" WHERE "name" = 'Personal';
+    IF NOT FOUND THEN
+        INSERT INTO "Role" ("name") VALUES ('Personal');
+    END IF;
+
     -- 1. Get or Create User
     SELECT id INTO v_user_id FROM "User" WHERE "userName" = 'togarci';
     IF NOT FOUND THEN

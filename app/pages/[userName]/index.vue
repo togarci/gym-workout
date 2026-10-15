@@ -25,8 +25,8 @@ function resetWorkoutOnAllComplete() {
   }
 }
 
-function getDataByLocalStorage() {
-  const localData = localStorage.getItem('workoutData');
+async function getDataByLocalStorage() {
+  const localData = await localStorage.getItem('workoutData');
   if (localData) {
     allWorkoutIdsDone.value = JSON.parse(localData);
     resetWorkoutOnAllComplete();
@@ -55,8 +55,8 @@ onMounted(async () => {
     return;
   }
 
+  await getDataByLocalStorage();
   await workoutStore.fetchWorkouts(name);
-  getDataByLocalStorage();
 });
 </script>
 

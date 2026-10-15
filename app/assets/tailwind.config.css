@@ -14,6 +14,17 @@
   --color-error-500: #c40000;
   --color-error-700: #9f0000;
 
+  --color-prs-50: #eff6ff;
+  --color-prs-100: #dbeafe;
+  --color-prs-200: #bfdbfe;
+  --color-prs-300: #93c5fd;
+  --color-prs-400: #60a5fa;
+  --color-prs-500: #3b82f6;
+  --color-prs-600: #2563eb;
+  --color-prs-700: #1d4ed8;
+  --color-prs-800: #1e40af;
+  --color-prs-900: #1e3a8a;
+
   --container-desktop: 600px;
 
   --shadow-custom: 0 4px 4px 0 rgb(0 0 0 / 0.25);
