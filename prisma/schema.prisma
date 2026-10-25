@@ -14,19 +14,25 @@ model Role {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  userName   String    @unique
-  email      String?   @unique
-  password   String?
-  name       String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  personalId Int?
-  personal   User?     @relation("PersonalToStudent", fields: [personalId], references: [id])
-  roleId     Int?
-  role       Role?     @relation(fields: [roleId], references: [id])
-  workouts   Workout[]
-  students   User[]    @relation("PersonalToStudent")
+  id        Int      @id @default(autoincrement())
+  userName  String   @unique @map("user_name")
+  email     String   @unique // se for obrigatório
+  password  String // se for obrigatório
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  personalId Int?  @map("personal_id")
+  personal   User? @relation("PersonalToStudent", fields: [personalId], references: [id], onDelete: SetNull)
+  roleId     Int?  @map("role_id")
+  role       Role? @relation(fields: [roleId], references: [id], onDelete: SetNull)
+
+  workouts Workout[]
+  students User[]    @relation("PersonalToStudent")
+
+  @@index([personalId])
+  @@index([roleId])
+  @@map("users")
 }
 
 model Workout {
