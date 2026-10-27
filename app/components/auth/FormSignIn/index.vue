@@ -63,7 +63,7 @@ function navigateToSignUp() {
       placeholder="Digite a sua senha"
     />
 
-    <a class="w-full text-right text-secondary" href="/auth/personal/signIn">Sou Personal</a>
+    <a class="w-full text-right text-secondary" href="/personal/auth/signUp">Sou Personal</a>
     
     <Button
       :disabled="isSubmitDisabled || isLoading"

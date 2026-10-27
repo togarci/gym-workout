@@ -12,21 +12,18 @@ export default defineEventHandler(async (event) => {
 
   const { userName, email, password, name } = body;
 
-  if (!userName) {
+  if (!userName || !email || !password) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Bad Request',
-      message: '`userName` é obrigatório.',
+      message: '`userName`, `email` e `password` são obrigatórios.',
     });
   }
 
   try {
-    let hashedPassword = undefined;
-    if (password) {
-      const salt = randomBytes(16).toString('hex');
-      const hash = scryptSync(password, salt, 64).toString('hex');
-      hashedPassword = `${salt}:${hash}`;
-    }
+    const salt = randomBytes(16).toString('hex');
+    const hash = scryptSync(password, salt, 64).toString('hex');
+    const hashedPassword = `${salt}:${hash}`;
 
     const newUser = await prisma.user.create({
       data: {

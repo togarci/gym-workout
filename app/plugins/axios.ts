@@ -2,6 +2,9 @@ import axios from 'axios';
 import { defineNuxtPlugin, useCookie, useRouter } from '#app';
 import { useUserStore } from '~/stores/user';
 
+// Rotas em que um erro não deve disparar a revalidação do token
+const PUBLIC_AUTH_ROUTES = ['/api/user/login', '/api/user/register'];
+
 export default defineNuxtPlugin(() => {
   const api = axios.create({
     withCredentials: true,
@@ -11,6 +14,15 @@ export default defineNuxtPlugin(() => {
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
+
+      // Rotas públicas: não há sessão para revalidar, apenas repassa o erro
+      const isPublicAuthRoute = PUBLIC_AUTH_ROUTES.some((route) =>
+        originalRequest?.url?.includes(route),
+      );
+
+      if (isPublicAuthRoute) {
+        return Promise.reject(error);
+      }
 
       // Se der 401 tentamos revalidar ainda
       if (error.response?.status === 401 && !originalRequest._retry) {

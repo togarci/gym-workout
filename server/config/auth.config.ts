@@ -19,7 +19,6 @@ export const protectedRoutes: ProtectedRoute[] = [
 
   // User
   { path: '/api/user/new', roles: ['admin', 'personal'] },
-  { path: '/api/user/register', roles: ['admin'] },
   { path: '/api/user/update', roles: ['admin'] },
   { path: '/api/user/delete', roles: ['admin'] },
 ];
