@@ -30,6 +30,16 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const personal = await prisma.personal.findUnique({ where: { userId: userContext.id } });
+
+    if (!personal) {
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'Forbidden',
+        message: 'Apenas personais podem cadastrar usuários.',
+      });
+    }
+
     const salt = randomBytes(16).toString('hex');
     const hash = scryptSync(password, salt, 64).toString('hex');
     const hashedPassword = `${salt}:${hash}`;
@@ -39,15 +49,20 @@ export default defineEventHandler(async (event) => {
         userName,
         email,
         password: hashedPassword,
-        name,
-        personalId: userContext.id,
+        role: { connect: { name: 'global' } },
+        global: {
+          create: { name, personalId: personal.id },
+        },
       },
+      include: { global: true },
     });
 
     const { password: _, ...userWithoutPassword } = newUser;
 
     return userWithoutPassword;
   } catch (error: any) {
+    if (error.statusCode) throw error;
+
     if (error.code === 'P2002') {
       throw createError({
         statusCode: 409,

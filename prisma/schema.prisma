@@ -9,37 +9,56 @@ datasource db {
 
 model Role {
   id    Int    @id @default(autoincrement())
-  name  String @unique
+  name  String @unique // "personal" | "global"
   users User[]
 }
 
+// Apenas credenciais de login
 model User {
   id        Int      @id @default(autoincrement())
   userName  String   @unique @map("user_name")
   email     String   @unique
   password  String
-  name      String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  personalId Int?  @map("personal_id")
-  personal   User? @relation("PersonalToStudent", fields: [personalId], references: [id], onDelete: SetNull)
-  roleId     Int?  @map("role_id")
-  role       Role? @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  roleId Int?  @map("role_id")
+  role   Role? @relation(fields: [roleId], references: [id], onDelete: SetNull)
+
+  personal Personal?
+  global   Global?
+
+  @@index([roleId])
+}
+
+model Personal {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  userId Int     @unique @map("user_id")
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  globals Global[]
+}
+
+model Global {
+  id         Int      @id @default(autoincrement())
+  name       String?
+  userId     Int      @unique @map("user_id")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personalId Int      @map("personal_id")
+  personal   Personal @relation(fields: [personalId], references: [id], onDelete: Cascade)
 
   workouts Workout[]
-  students User[]    @relation("PersonalToStudent")
 
   @@index([personalId])
-  @@index([roleId])
 }
 
 model Workout {
   id          Int               @id @default(autoincrement())
   name        String
   description String?
-  userId      Int
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  globalId    Int
+  global      Global            @relation(fields: [globalId], references: [id], onDelete: Cascade)
   exercises   WorkoutExercise[]
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt

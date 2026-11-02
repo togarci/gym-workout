@@ -5,7 +5,7 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const adapter = new PrismaPg({ connectionString: String(DATABASE_URL) });
 const prisma = new PrismaClient({ adapter });
 
-const rolesToCreate = [{ name: 'admin' }, { name: 'cliente' }, { name: 'personal' }];
+const rolesToCreate = [{ name: 'personal' }, { name: 'global' }];
 
 const exercisesToCreate = [
   { name: 'Supino Reto', muscleGroup: 'Peito' },

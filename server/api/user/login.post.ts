@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
           userName ? { userName } : undefined,
         ].filter(Boolean) as any,
       },
+      include: { role: true, personal: true, global: true },
     });
 
     if (!user || !user.password) {

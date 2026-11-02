@@ -1,9 +1,24 @@
+export interface Personal {
+  id: number;
+  name?: string | null;
+  userId: number;
+}
+
+export interface Global {
+  id: number;
+  name?: string | null;
+  userId: number;
+  personalId: number;
+}
+
 export interface User {
   id: number;
   userName: string;
   email?: string | null;
-  name?: string | null;
   roleId?: number | null;
+  role?: { id: number; name: 'personal' | 'global' } | null;
+  personal?: Personal | null;
+  global?: Global | null;
   createdAt?: string;
   updatedAt?: string;
 }

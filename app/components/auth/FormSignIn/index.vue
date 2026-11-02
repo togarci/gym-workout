@@ -43,9 +43,6 @@ async function submitSignIn() {
   }
 }
 
-function navigateToSignUp() {
-  router.push('/auth/signUp');
-}
 </script>
 
 <template>
@@ -63,7 +60,7 @@ function navigateToSignUp() {
       placeholder="Digite a sua senha"
     />
 
-    <a class="w-full text-right text-secondary" href="/personal/auth/signUp">Sou Personal</a>
+    <NuxtLink class="w-full text-right text-secondary" to="/personal/auth/signUp">Sou Personal</NuxtLink>
     
     <Button
       :disabled="isSubmitDisabled || isLoading"

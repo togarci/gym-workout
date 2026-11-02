@@ -10,12 +10,12 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
 
-    const { name, description, userId, exercises } = body;
+    const { name, description, globalId, exercises } = body;
 
-    if (!name || !userId) {
+    if (!name || !globalId) {
       return createError({
         statusCode: 400,
-        statusMessage: 'Name and userId are required fields.',
+        statusMessage: 'Name and globalId are required fields.',
       });
     }
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
       data: {
         name,
         description,
-        userId,
+        globalId,
         exercises: {
           create: exercises?.map((ex: any, index: number) => ({
             exerciseId: ex.exerciseId,

@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     where: {
       id,
     },
+    include: { personal: true, global: true },
   });
 
   if (!user) {
@@ -35,8 +36,10 @@ export default defineEventHandler(async (event) => {
       data: {
         userName,
         email,
-        name,
+        ...(name !== undefined && user.personal ? { personal: { update: { name } } } : {}),
+        ...(name !== undefined && user.global ? { global: { update: { name } } } : {}),
       },
+      include: { personal: true, global: true },
     });
 
     const { password: _, ...userWithoutPassword } = updatedUser;

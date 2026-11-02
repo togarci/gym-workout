@@ -30,13 +30,16 @@ export default defineEventHandler(async (event) => {
         userName,
         email,
         password: hashedPassword,
-        name,
         role: {
           connect: {
-            name: 'Personal',
+            name: 'personal',
           },
         },
+        personal: {
+          create: { name },
+        },
       },
+      include: { personal: true },
     });
 
     const { password: _, ...userWithoutPassword } = newUser;
