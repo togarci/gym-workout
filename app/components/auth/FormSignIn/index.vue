@@ -3,10 +3,12 @@ import { computed, ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import { loginUser } from '~/services/user';
 import { useUserStore } from '~/stores/user';
+import Switch from '~/components/share/Switch/index.vue';
 
 const router = useRouter();
 const userName = ref<string>('');
 const password = ref<string>('');
+const isPersonal = ref<boolean>(false);
 const isLoading = ref<boolean>(false);
 const userStore = useUserStore();
 
@@ -19,12 +21,17 @@ function clearForm() {
   password.value = '';
 }
 
+function goToSignUp() {
+  router.push('/personal/auth/signUp');
+}
+
 async function submitSignIn() {
   isLoading.value = true;
   try {
     const response = await loginUser({
       userName: userName.value,
       password: password.value,
+      personal: isPersonal.value,
     });
 
     if (response?.data) {
@@ -32,8 +39,12 @@ async function submitSignIn() {
       
       const userNameCookie = useCookie<string | null>('userName');
       userNameCookie.value = response.data.userName;
-      
-      router.push(`/${response.data.userName}`);
+
+      const isPersonal = response.data.isPersonal
+
+      isPersonal ?
+        router.push(`/personal/${response.data.userName}`) :  
+        router.push(`/${response.data.userName}`)
     }
   } catch (error: any) {
     toast.error(error?.data?.message || error?.message || 'Usuário não encontrado');
@@ -60,13 +71,20 @@ async function submitSignIn() {
       placeholder="Digite a sua senha"
     />
 
-    <NuxtLink class="w-full text-right text-secondary" to="/personal/auth/signUp">Sou Personal</NuxtLink>
-    
+    <label class="flex w-full items-center justify-end gap-3 cursor-pointer select-none">
+      <span class="text-secondary">Sou Personal</span>
+      <Switch v-model="isPersonal" />
+    </label>
+
     <Button
       :disabled="isSubmitDisabled || isLoading"
       @click="submitSignIn"
     >
       ENTRAR
+    </Button>
+
+    <Button v-if="isPersonal" variant="secondary" @click="goToSignUp">
+      CRIAR CONTA
     </Button>
   </div>
 </template>

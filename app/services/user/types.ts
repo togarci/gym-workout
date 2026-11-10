@@ -27,6 +27,7 @@ export interface LoginPayload {
   email?: string;
   userName?: string;
   password?: string;
+  personal?: boolean;
 }
 
 export interface LoginResponse {
@@ -34,6 +35,7 @@ export interface LoginResponse {
   data: User & {
     accessToken: string;
     refreshToken: string;
+    isPersonal: boolean;
   };
   message: string;
 }
@@ -52,6 +54,7 @@ export interface RevalidateResponse {
   data: User & {
     accessToken: string;
     refreshToken: string;
+    isPersonal?: boolean;
   };
   message: string;
 }

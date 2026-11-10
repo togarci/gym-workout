@@ -2,6 +2,7 @@
 import ButtonDocs from '~/components/share/Button/Button.docs.vue';
 import InputDocs from '~/components/share/Input/Input.docs.vue';
 import CheckboxDocs from '~/components/share/Checkbox/Checkbox.docs.vue';
+import SwitchDocs from '~/components/share/Switch/Switch.docs.vue';
 import ModalDocs from '~/components/share/modal/modal.docs.vue';
 import SVGDocs from '~/components/share/SVG/SVG.docs.vue';
 </script>
@@ -37,6 +38,9 @@ import SVGDocs from '~/components/share/SVG/SVG.docs.vue';
 
       <!-- 3. Card Checkbox -->
       <CheckboxDocs />
+
+      <!-- 3.1 Card Switch -->
+      <SwitchDocs />
 
       <!-- 4. Card Modal -->
       <ModalDocs />
