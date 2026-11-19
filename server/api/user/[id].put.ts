@@ -1,5 +1,6 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { getParamId } from '~~/server/utils/params';
 
 const config = useRuntimeConfig();
 const adapter = new PrismaPg({ connectionString: String(config.public.databaseUrl) });
@@ -7,12 +8,13 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
+  const id = getParamId(event, 'ID do usuário inválido.');
 
   // TODO: O ID do usuário deve vir de uma sessão de autenticação, não do corpo da requisição.
   // Exemplo: const { id } = await getUserFromSession(event);
   // Isso previne que um usuário modifique os dados de outro.
 
-  const { id, userName, email, name } = body;
+  const { userName, email, name } = body;
   const user = await prisma.user.findUnique({
     where: {
       id,

@@ -12,11 +12,30 @@ export default defineEventHandler(async (event) => {
     const userName = query.userName as string | undefined;
 
     const workouts = await prisma.workout.findMany({
-      where: userName ? {
-        user: {
-          userName: userName
-        }
-      } : undefined,
+      where: userName
+        ? {
+            OR: [
+              {
+                personal: {
+                  user: {
+                    userName,
+                  },
+                },
+              },
+              {
+                globals: {
+                  some: {
+                    global: {
+                      user: {
+                        userName,
+                      },
+                    },
+                  },
+                },
+              },
+            ],
+          }
+        : undefined,
       select: {
         id: true,
         name: true,

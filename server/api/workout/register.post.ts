@@ -1,5 +1,6 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { getAuthenticatedPersonalId } from '~~/server/utils/auth';
 
 const config = useRuntimeConfig();
 
@@ -8,6 +9,11 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   try {
+    const personalId = await getAuthenticatedPersonalId(
+      event,
+      'Apenas personais podem cadastrar treinos.'
+    );
+
     const body = await readBody(event);
 
     const { name, description, globalId, exercises } = body;
@@ -22,8 +28,8 @@ export default defineEventHandler(async (event) => {
     const workout = await prisma.workout.create({
       data: {
         name,
+        personalId,
         description,
-        globalId,
         exercises: {
           create: exercises?.map((ex: any, index: number) => ({
             exerciseId: ex.exerciseId,
@@ -46,7 +52,9 @@ export default defineEventHandler(async (event) => {
       data: workout,
       message: 'Workout registered successfully.',
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.statusCode) throw error;
+
     console.error('Error registering workout:', error);
     return createError({
       statusCode: 500,

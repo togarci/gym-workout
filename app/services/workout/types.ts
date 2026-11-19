@@ -6,10 +6,19 @@ export interface Exercise {
   notes?: string;
 }
 
+export interface GlobalWorkout {
+  id: number;
+  globalId: number;
+  workoutId: number;
+  assignedAt?: string;
+}
+
 export interface Workout {
   id: number;
   name: string;
   description?: string | null;
+  personalId?: number;
+  globals?: GlobalWorkout[];
   duration?: string | null;
   observations?: string | null;
   exercises: Exercise[];

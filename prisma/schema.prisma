@@ -37,7 +37,8 @@ model Personal {
   userId Int     @unique @map("user_id")
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  globals Global[]
+  globals  Global[]
+  workouts Workout[]
 }
 
 model Global {
@@ -48,7 +49,7 @@ model Global {
   personalId Int      @map("personal_id")
   personal   Personal @relation(fields: [personalId], references: [id], onDelete: Cascade)
 
-  workouts Workout[]
+  workouts GlobalWorkout[]
 
   @@index([personalId])
 }
@@ -57,11 +58,27 @@ model Workout {
   id          Int               @id @default(autoincrement())
   name        String
   description String?
-  globalId    Int
-  global      Global            @relation(fields: [globalId], references: [id], onDelete: Cascade)
+  personalId  Int               @map("personal_id")
+  personal    Personal          @relation(fields: [personalId], references: [id], onDelete: Cascade)
+  globals     GlobalWorkout[]
   exercises   WorkoutExercise[]
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
+
+  @@index([personalId])
+}
+
+model GlobalWorkout {
+  id         Int      @id @default(autoincrement())
+  globalId   Int      @map("global_id")
+  global     Global   @relation(fields: [globalId], references: [id], onDelete: Cascade)
+  workoutId  Int      @map("workout_id")
+  workout    Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  assignedAt DateTime @default(now()) @map("assigned_at")
+
+  @@unique([globalId, workoutId])
+  @@index([globalId])
+  @@index([workoutId])
 }
 
 model Exercise {

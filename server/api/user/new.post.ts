@@ -1,6 +1,7 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { scryptSync, randomBytes } from 'crypto';
+import { getAuthenticatedPersonalId } from '~~/server/utils/auth';
 
 const config = useRuntimeConfig();
 
@@ -9,16 +10,6 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const userContext = event.context.user;
-
-  if (!userContext) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'Usuário não autenticado.',
-    });
-  }
-
   const { userName, email, password, name } = body;
 
   if (!userName || !email || !password) {
@@ -30,15 +21,10 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const personal = await prisma.personal.findUnique({ where: { userId: userContext.id } });
-
-    if (!personal) {
-      throw createError({
-        statusCode: 403,
-        statusMessage: 'Forbidden',
-        message: 'Apenas personais podem cadastrar usuários.',
-      });
-    }
+    const personalId = await getAuthenticatedPersonalId(
+      event,
+      'Apenas personais podem cadastrar usuários.'
+    );
 
     const salt = randomBytes(16).toString('hex');
     const hash = scryptSync(password, salt, 64).toString('hex');
@@ -51,7 +37,7 @@ export default defineEventHandler(async (event) => {
         password: hashedPassword,
         role: { connect: { name: 'global' } },
         global: {
-          create: { name, personalId: personal.id },
+          create: { name, personalId },
         },
       },
       include: { global: true },

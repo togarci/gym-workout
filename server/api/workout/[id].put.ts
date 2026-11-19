@@ -1,5 +1,8 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { getAuthenticatedPersonalId } from '~~/server/utils/auth';
+import { getParamId } from '~~/server/utils/params';
+import { validateWorkoutOwnership } from '~~/server/utils/workout';
 
 const config = useRuntimeConfig();
 
@@ -9,15 +12,16 @@ const prisma = new PrismaClient({ adapter });
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
+    const id = getParamId(event, 'O ID do treino é obrigatório para atualização.');
+    const personalId = await getAuthenticatedPersonalId(event, 'Apenas personal podem editar treinos');
 
-    const { id, name, description, exercises } = body;
+    const { name, description, exercises } = body;
 
-    if (!id) {
-      return createError({
-        statusCode: 400,
-        statusMessage: 'Workout ID is required for update.',
-      });
-    }
+    await validateWorkoutOwnership(
+      id,
+      personalId,
+      'Você não tem permissão para atualizar este treino.'
+    );
 
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
@@ -38,7 +42,7 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const workout = await prisma.workout.update({
+    const updatedWorkout = await prisma.workout.update({
       where: { id },
       data: updateData,
       include: {
@@ -48,10 +52,12 @@ export default defineEventHandler(async (event) => {
 
     return {
       statusCode: 200,
-      data: workout,
+      data: updatedWorkout,
       message: 'Workout updated successfully.',
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.statusCode) throw error;
+
     console.error('Error updating workout:', error);
     return createError({
       statusCode: 500,

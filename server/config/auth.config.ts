@@ -10,6 +10,7 @@ export const protectedRoutes: ProtectedRoute[] = [
   { path: '/api/workout/get' },
   { path: '/api/workout/register', roles: ['personal'] },
   { path: '/api/workout/update', roles: ['personal'] },
+  { path: '/api/workout/delete', roles: ['personal'] },
 
   // Exercise
   { path: '/api/exercise/:id' },
@@ -21,4 +22,10 @@ export const protectedRoutes: ProtectedRoute[] = [
   { path: '/api/user/new', roles: ['personal'] },
   { path: '/api/user/update', roles: ['personal'] },
   { path: '/api/user/delete', roles: ['personal'] },
+
+  // Personal
+  { path: '/api/personal', roles: ['personal'] },
+
+  // Workout User (GlobalWorkout)
+  { path: '/api/workout-user/set', roles: ['personal'] },
 ];

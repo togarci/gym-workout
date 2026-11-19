@@ -1,5 +1,6 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { getParamId } from '~~/server/utils/params';
 
 const config = useRuntimeConfig();
 
@@ -8,14 +9,7 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = parseInt(event.context.params?.id || '', 10);
-
-    if (isNaN(id)) {
-      return createError({
-        statusCode: 400,
-        statusMessage: 'Invalid workout ID',
-      });
-    }
+    const id = getParamId(event, 'ID do treino inválido.');
 
     const workout = await prisma.workout.findUnique({
       where: {
@@ -44,7 +38,9 @@ export default defineEventHandler(async (event) => {
       statusCode: 200,
       data: workout,
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.statusCode) throw error;
+
     console.error('Error fetching workout by ID:', error);
     return createError({
       statusCode: 500,

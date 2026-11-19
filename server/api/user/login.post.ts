@@ -95,6 +95,7 @@ async function authenticateUser(userName: string, password: string, isPersonal: 
     throwInvalidCredentials();
   }
 
+
   return user;
 }
 
