@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '~/stores/user/index';
 import { logoutUser } from '~/services/auth';
-import { mockPersonalStudents, type PersonalStudentMock } from '~/states/mockPersonalStudents';
+import { getPersonalTeam } from '~/services/personal';
+import type { PersonalStudentMock } from '~/states/mockPersonalStudents';
 import type { PersonalNavKey } from '~/components/personal/PersonalSidebar/index.vue';
 
 const route = useRoute();
@@ -17,7 +18,7 @@ const userName = computed(() => {
 const activeNav = ref<PersonalNavKey>('students');
 const searchQuery = ref('');
 const isLoading = ref(false);
-const students = ref<PersonalStudentMock[]>(mockPersonalStudents);
+const students = ref<PersonalStudentMock[]>([]);
 
 const filteredStudents = computed(() => {
   const query = searchQuery.value.trim().toLowerCase();
@@ -31,6 +32,29 @@ const filteredStudents = computed(() => {
       student.userName.toLowerCase().includes(query) ||
       student.email.toLowerCase().includes(query)
   );
+});
+
+async function fetchTeam() {
+  isLoading.value = true;
+  try {
+    const response = await getPersonalTeam();
+    students.value = (response.data || []).map((member) => ({
+      id: member.id,
+      name: member.name || member.user.userName,
+      userName: member.user.userName,
+      email: member.user.email,
+      workoutsCount: member.workouts?.length ?? 0,
+    }));
+  } catch (err) {
+    console.error('Error fetching personal team:', err);
+    students.value = [];
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+onMounted(async () => {
+  await fetchTeam();
 });
 
 async function logout() {

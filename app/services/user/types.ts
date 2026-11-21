@@ -19,6 +19,7 @@ export interface User {
   role?: { id: number; name: 'personal' | 'global' } | null;
   personal?: Personal | null;
   global?: Global | null;
+  isPersonal?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

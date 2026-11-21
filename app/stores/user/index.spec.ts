@@ -13,6 +13,7 @@ describe('useUserStore', () => {
     expect(store.user).toBeNull();
     expect(store.isAuthenticated).toBe(false);
     expect(store.userName).toBe('');
+    expect(store.isPersonal).toBe(false);
   });
 
   describe('setUser', () => {

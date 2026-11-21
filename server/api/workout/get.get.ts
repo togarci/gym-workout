@@ -1,5 +1,6 @@
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { getAuthenticatedPersonalId } from '~~/server/utils/auth';
 
 const config = useRuntimeConfig();
 
@@ -8,34 +9,15 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   try {
-    const query = getQuery(event);
-    const userName = query.userName as string | undefined;
+    const personalId = await getAuthenticatedPersonalId(
+      event,
+      'Apenas personais podem acessar os treinos.'
+    );
 
     const workouts = await prisma.workout.findMany({
-      where: userName
-        ? {
-            OR: [
-              {
-                personal: {
-                  user: {
-                    userName,
-                  },
-                },
-              },
-              {
-                globals: {
-                  some: {
-                    global: {
-                      user: {
-                        userName,
-                      },
-                    },
-                  },
-                },
-              },
-            ],
-          }
-        : undefined,
+      where: {
+        personalId,
+      },
       select: {
         id: true,
         name: true,
@@ -43,7 +25,7 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!workouts || workouts.length === 0) {
-      return createError({
+      throw createError({
         statusCode: 404,
         statusMessage: 'Workouts not found',
       });
@@ -53,9 +35,11 @@ export default defineEventHandler(async (event) => {
       statusCode: 200,
       data: workouts,
     };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.statusCode) throw error;
+
     console.error('Error fetching workouts:', error);
-    return createError({
+    throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error while fetching workouts.',
     });
