@@ -4,7 +4,7 @@ import { mount, flushPromises } from '@vue/test-utils';
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import FormSignIn from './index.vue';
 import { toast } from 'vue3-toastify';
-import { loginUser } from '~/services/user';
+import { loginUser } from '~/services/auth';
 
 const { pushMock } = vi.hoisted(() => ({ pushMock: vi.fn() }));
 
@@ -16,7 +16,7 @@ vi.mock('vue3-toastify', () => ({
   },
 }));
 
-vi.mock('~/services/user', () => ({
+vi.mock('~/services/auth', () => ({
   loginUser: vi.fn(),
 }));
 

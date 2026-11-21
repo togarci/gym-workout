@@ -14,7 +14,7 @@ mockNuxtImport('useRouter', () => () => ({
   push: pushMock,
 }));
 
-vi.mock('~/services/user', () => ({
+vi.mock('~/services/auth', () => ({
   logoutUser: vi.fn(),
 }));
 

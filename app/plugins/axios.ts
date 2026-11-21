@@ -3,7 +3,7 @@ import { defineNuxtPlugin, useCookie, useRouter } from '#app';
 import { useUserStore } from '~/stores/user';
 
 // Rotas em que um erro não deve disparar a revalidação do token
-const PUBLIC_AUTH_ROUTES = ['/api/user/login', '/api/user/register'];
+const PUBLIC_AUTH_ROUTES = ['/api/auth/login', '/api/user/register'];
 
 export default defineNuxtPlugin(() => {
   const api = axios.create({
@@ -30,7 +30,7 @@ export default defineNuxtPlugin(() => {
 
         try {
           // O navegador envia o cookie refreshToken automaticamente
-          await axios.get('/api/user/revalidate', { withCredentials: true });
+          await axios.get('/api/auth/revalidate', { withCredentials: true });
 
           // Reexecuta a requisição original com os novos cookies gravados pelo backend
           return api(originalRequest);

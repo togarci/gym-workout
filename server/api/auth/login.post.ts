@@ -116,8 +116,11 @@ function setSessionCookies(
   userName: string
 ) {
   const baseOptions = {
+    // Em produção exige HTTPS para trafegar o cookie; em dev permite HTTP local (localhost)
     secure: process.env.NODE_ENV === 'production',
+    // Protege contra CSRF bloqueando envio em requisições cross-site de terceiros, mas mantém sessão ao navegar por links externos
     sameSite: 'lax' as const,
+    // Disponibiliza o cookie para todas as rotas da aplicação (tanto /api/* quanto páginas do front)
     path: '/',
   };
 

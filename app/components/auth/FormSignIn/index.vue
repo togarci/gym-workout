@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { toast } from 'vue3-toastify';
-import { loginUser } from '~/services/user';
+import { loginUser } from '~/services/auth';
 import { useUserStore } from '~/stores/user';
 import Switch from '~/components/share/Switch/index.vue';
 

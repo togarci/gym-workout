@@ -14,11 +14,9 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <section
-    class="bg-white p-6 rounded-2xl shadow-custom border border-gray-600 flex-1 flex flex-col gap-5"
-  >
+  <section class="bg-white p-6 rounded-2xl shadow-custom border border-gray-600 flex-1 flex flex-col gap-5">
     <div class="flex items-center justify-between gap-2">
-      <h2 class="text-secondary font-semibold text-2xl">Alunos vinculados</h2>
+      <h2 class="text-secondary font-semibold text-2xl">Alunos</h2>
       <div
         v-if="isLoading"
         class="h-4 w-44 bg-gray-200 rounded-md animate-pulse"
@@ -46,7 +44,7 @@ const emits = defineEmits<{
     <div
       v-else-if="students.length > 0"
       data-testId="students-list"
-      class="flex flex-col gap-5"
+      class="grid grid-cols-2 gap-5"
     >
       <StudentCard
         v-for="student in students"

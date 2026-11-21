@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '~/stores/user/index';
 import { useWorkoutStore } from '~/stores/workout/index';
-import { logoutUser } from '~/services/user';
+import { logoutUser } from '~/services/auth';
 
 const route = useRoute();
 const router = useRouter();

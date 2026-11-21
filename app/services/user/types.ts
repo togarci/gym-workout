@@ -23,23 +23,6 @@ export interface User {
   updatedAt?: string;
 }
 
-export interface LoginPayload {
-  email?: string;
-  userName?: string;
-  password?: string;
-  personal?: boolean;
-}
-
-export interface LoginResponse {
-  statusCode: number;
-  data: User & {
-    accessToken: string;
-    refreshToken: string;
-    isPersonal: boolean;
-  };
-  message: string;
-}
-
 export interface RegisterPayload {
   userName: string;
   email: string;
@@ -48,16 +31,6 @@ export interface RegisterPayload {
 }
 
 export type RegisterResponse = User;
-
-export interface RevalidateResponse {
-  statusCode: number;
-  data: User & {
-    accessToken: string;
-    refreshToken: string;
-    isPersonal?: boolean;
-  };
-  message: string;
-}
 
 export interface UpdateUserPayload {
   id: number;
@@ -74,9 +47,4 @@ export interface DeleteUserPayload {
 
 export interface DeleteUserResponse {
   status: string;
-}
-
-export interface LogoutResponse {
-  statusCode: number;
-  message: string;
 }

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useUserStore } from '~/stores/user/index';
-import { logoutUser } from '~/services/user';
+import { logoutUser } from '~/services/auth';
 import { mockPersonalStudents, type PersonalStudentMock } from '~/states/mockPersonalStudents';
 import type { PersonalNavKey } from '~/components/personal/PersonalSidebar/index.vue';
 
@@ -56,7 +56,7 @@ async function logout() {
       @logout="logout"
     />
 
-    <main class="flex-1 flex flex-col w-full max-w-desktop mx-auto gap-6">
+    <main class="flex-1 flex flex-col w-full max-w-admin mx-auto gap-6">
       <PersonalHeader
         v-model="searchQuery"
         :userName="userName"
