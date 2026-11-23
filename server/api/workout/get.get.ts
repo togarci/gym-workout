@@ -9,20 +9,61 @@ const prisma = new PrismaClient({ adapter });
 
 export default defineEventHandler(async (event) => {
   try {
-    const personalId = await getAuthenticatedPersonalId(
-      event,
-      'Apenas personais podem acessar os treinos.'
-    );
+    const user = event.context.user;
 
-    const workouts = await prisma.workout.findMany({
-      where: {
-        personalId,
-      },
-      select: {
-        id: true,
-        name: true,
-      },
-    });
+    if (!user) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Unauthorized',
+        message: 'Usuário não autenticado.',
+      });
+    }
+
+    const roleName = user.role?.name;
+    let workouts: { id: number; name: string }[] = [];
+
+    if (roleName === 'personal') {
+      const personalId = await getAuthenticatedPersonalId(
+        event,
+        'Apenas personais podem acessar os treinos.'
+      );
+
+      workouts = await prisma.workout.findMany({
+        where: {
+          personalId,
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+    } else {
+      const globalProfile = await prisma.global.findUnique({
+        where: { userId: user.id },
+      });
+
+      if (!globalProfile) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'Forbidden',
+          message: 'Perfil de aluno não encontrado.',
+        });
+      }
+
+      workouts = await prisma.workout.findMany({
+        where: {
+          globals: {
+            some: {
+              globalId: globalProfile.id,
+            },
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+    }
 
     if (!workouts || workouts.length === 0) {
       throw createError({

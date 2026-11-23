@@ -7,7 +7,7 @@ export interface ProtectedRoute {
 export const protectedRoutes: ProtectedRoute[] = [
   // Workout
   { path: '/api/workout/:id' },
-  { path: '/api/workout/get', roles: ['personal'] },
+  { path: '/api/workout/get' },
   { path: '/api/workout/register', roles: ['personal'] },
   { path: '/api/workout/update', roles: ['personal'] },
   { path: '/api/workout/delete', roles: ['personal'] },
