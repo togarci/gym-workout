@@ -66,20 +66,23 @@ async function saveWeight(exerciseId: number) {
         {{ exercise.obs }}
       </span>
     </Modal>
-    
+
     <Modal
       v-model="isWeightModalOpen"
       title="Peso"
     >
       <div class="flex flex-col gap-4">
-        <input 
-          v-model="weightInput" 
-          type="text" 
-          class="border rounded-md px-3 py-2 w-full" 
-          placeholder="Ex: 45" 
+        <input
+          v-model="weightInput"
+          type="text"
+          class="border rounded-md px-3 py-2 w-full"
+          placeholder="Ex: 45"
         />
-        <Button @click="saveWeight(exercise.id)" :disabled="isSaving"> 
-          {{ isSaving ? 'Salvando...' : 'Salvar' }} 
+        <Button
+          @click="saveWeight(exercise.id)"
+          :disabled="isSaving"
+        >
+          {{ isSaving ? 'Salvando...' : 'Salvar' }}
         </Button>
       </div>
     </Modal>
@@ -115,7 +118,9 @@ async function saveWeight(exerciseId: number) {
             >Rep:</span
           ><span>{{ exercise.reps }}</span>
         </div>
+      </div>
 
+      <div class="flex items-center gap-2 5">
         <WorkoutItemButton
           v-if="exercise.obs"
           ref="obsBtnRef"
@@ -132,7 +137,7 @@ async function saveWeight(exerciseId: number) {
           :label="exercise.weight ? `${exercise.weight} kg` : 'Peso'"
           @click.stop="openWeightModal(exercise.weight)"
         >
-          <FitSVG className="fill-primary size-4"/>
+          <FitSVG className="fill-primary size-4" />
         </WorkoutItemButton>
       </div>
     </div>

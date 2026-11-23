@@ -38,7 +38,7 @@ function submitWorkout() {
 
 onMounted(async () => {
   if (!userName || !exerciseId) router.push('/404');
-  
+
   const workoutData = await workoutStore.fetchWorkoutById(Number(exerciseId));
 
   if (!workoutData) {
@@ -87,18 +87,29 @@ function handleUpdateWeight(exerciseId: number, weight: string) {
     <div class="flex flex-col w-full max-w-desktop gap-5">
       <NuxtLink
         :href="`/${userName}`"
-        class="flex gap-2 bg-white/70 md:p-6 rounded-2xl items-center"
+        class="flex gap-2 bg-white/70 shadow-custom px-5 py-4 rounded-2xl items-center"
       >
         <div class="w-6 flex items-center h-8">
           <ArrowLeft />
         </div>
-        <div v-if="workoutStore.isLoading" class="h-6 animate-pulse bg-gray-200 rounded-md w-full"></div>
-        <h1 v-else class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap">{{ currentWorkout?.name }}</h1>
+        <div
+          v-if="workoutStore.isLoading"
+          class="h-6 animate-pulse bg-gray-200 rounded-md w-full"
+        ></div>
+        <h1
+          v-else
+          class="text-secondary font-semibold line-clamp-2 text-2xl text-wrap"
+        >
+          {{ currentWorkout?.name }}
+        </h1>
       </NuxtLink>
 
       <div class="flex flex-1 flex-col gap-3 md:bg-white/70 md:p-6 rounded-2xl">
         <template v-if="workoutStore.isLoading">
-          <ItemWorkoutSkeleton v-for="i in 4" :key="i" />
+          <ItemWorkoutSkeleton
+            v-for="i in 4"
+            :key="i"
+          />
         </template>
         <template v-else>
           <ItemWorkout
